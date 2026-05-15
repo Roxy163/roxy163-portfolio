@@ -1,0 +1,1 @@
+import{g as t}from"./_commonjsHelpers-CdNy-jbM.js";var r,a={exports:{}};const o=t(r?a.exports:(r=1,a.exports=function(t,r,a){r.prototype.dayOfYear=function(t){var r=Math.round((a(this).startOf("day")-a(this).startOf("year"))/864e5)+1;return null==t?r:this.add(t-r,"day")}}));export{o as d};

@@ -1,0 +1,1 @@
+import"./_virtual_wxt-html-plugins-Dqv5PPZA.js";globalThis.addEventListener("message",(t=>{"getStorage"===t.data.type&&t.source.postMessage({type:"storageData",data:localStorage.getItem(t.data.key),id:t.data.id},"*")}));

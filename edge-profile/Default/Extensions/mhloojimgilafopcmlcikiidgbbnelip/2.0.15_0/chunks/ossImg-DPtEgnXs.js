@@ -1,0 +1,1 @@
+function e(e,i=100,s=i,l=92){if(!e)return e;let t=e&&e.includes("?t=")?"&":"?";return!e||"svg"!=e.split(".").pop()&&e.includes("files.codelife.cc")?`${e}${t}x-oss-process=image/resize,limit_0,m_fill,w_${i},h_${s}/quality,q_${l}/format,webp`:e}export{e as o};

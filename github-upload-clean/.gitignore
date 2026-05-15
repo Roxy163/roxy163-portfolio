@@ -1,0 +1,13 @@
+node_modules
+dist
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+vite.config.mjs
+preview-*.png
+preview.log
+preview.err
+edge-profile
+edge-profile-*
+roxy163-portfolio-dist.zip
+github-upload-clean

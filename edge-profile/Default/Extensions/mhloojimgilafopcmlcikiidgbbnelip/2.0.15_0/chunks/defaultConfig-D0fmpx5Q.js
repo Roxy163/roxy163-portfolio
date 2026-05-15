@@ -1,0 +1,1 @@
+const e={name:"下班倒计时",target:"10",workTime:["2020-12-20 09:00:00","2020-12-20 18:00:00"],repeatWeek:["8"],bgColor:"#ffffff",textColor:"#666666",family:"HarmonyOS_Sans",mask:0,dayMoney:1e3,moreList:["1","2","3","4"]};export{e as d};

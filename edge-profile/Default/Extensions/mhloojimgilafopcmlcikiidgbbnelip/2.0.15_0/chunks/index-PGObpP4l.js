@@ -1,0 +1,1 @@
+import{d as e}from"./index-BF2wJLBh.js";import{j as s,u as i}from"./tailwind-BPD3yoFy.js";const o=({from:o,replacement:t,scope:a,version:r,ref:n,type:m="API"},p)=>{s((()=>i(p)),(s=>{s&&e(a,`[${m}] ${o} is about to be deprecated in version ${r}, please use ${t} instead.\nFor more detail, please visit: ${n}\n`)}),{immediate:!0})};export{o as u};

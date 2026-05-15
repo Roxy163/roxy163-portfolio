@@ -1,0 +1,5 @@
+2026/05/15-17:51:53.481 5f80 Creating DB D:\Roxy163\gerenwangzhan\edge-profile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/05/15-17:51:53.485 5f80 Reusing MANIFEST D:\Roxy163\gerenwangzhan\edge-profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/05/15-17:51:53.744 63dc Level-0 table #5: started
+2026/05/15-17:51:53.746 63dc Level-0 table #5: 682468 bytes OK
+2026/05/15-17:51:53.747 63dc Delete type=0 #3

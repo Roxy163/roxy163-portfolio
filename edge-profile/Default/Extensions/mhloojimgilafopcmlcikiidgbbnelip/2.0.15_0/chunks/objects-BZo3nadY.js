@@ -1,0 +1,1 @@
+import{A as e,B as t}from"./index-BF2wJLBh.js";function n(t,n,s){var a=null==t?void 0:e(t,n);return void 0===a?s:a}const s=e=>Object.keys(e),a=e=>Object.entries(e),r=(e,s,a)=>({get value(){return n(e,s,a)},set value(n){!function(e,n,s){null==e||t(e,n,s)}(e,s,n)}});export{r as a,a as e,n as g,s as k};

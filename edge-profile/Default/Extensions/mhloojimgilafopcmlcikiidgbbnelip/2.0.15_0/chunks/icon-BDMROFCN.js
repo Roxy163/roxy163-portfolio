@@ -1,0 +1,1 @@
+import{a as e,c as s,b as t}from"./tailwind-BPD3yoFy.js";const o={class:"size-full bg-[#4f83f5]",src:"https://files.codelife.cc/icons/imgCompress.svg",alt:""};const a=e({},[["render",function(e,a){return t(),s("img",o)}],["__scopeId","data-v-3f36698a"]]),r=Object.freeze(Object.defineProperty({__proto__:null,default:a},Symbol.toStringTag,{value:"Module"}));export{r as _};
