@@ -76,7 +76,7 @@ export type ReportSnapshot = {
 export const links = {
   resumePdf: "/resume.pdf",
   email: "ry-dakeai@foxmail.com",
-  wechat: "",
+  wechat: "juben6868",
   github: "https://github.com/Roxy163",
   portfolio: "https://roxy163.netlify.app",
   aiReport:
