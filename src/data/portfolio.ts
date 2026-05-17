@@ -66,14 +66,19 @@ export type ReportSnapshot = {
     fallback: string;
   }>;
   abilities: Array<{ title: string; detail: string }>;
+  testFramework: {
+    tasks: string[];
+    categories: string[];
+    dimensions: string[];
+  };
 };
 
 export const links = {
   resumePdf: "/resume.pdf",
   email: "ry-dakeai@foxmail.com",
-  wechat: "【待补充】",
-  github: "【待补充】",
-  portfolio: "【待补充】",
+  wechat: "",
+  github: "https://github.com/Roxy163",
+  portfolio: "https://roxy163.netlify.app",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
 };
@@ -93,15 +98,15 @@ export const profile = {
 export const heroProofs = [
   {
     title: "塔罗记录App MVP",
-    detail: "已具备基础功能，使用AI协同生成代码，并用Supabase实现登录功能。",
+    detail: "从想法到可运行网页端MVP，AI协同生成代码 + Supabase登录，已具备核心功能。",
   },
   {
-    title: "20+款AI产品横测",
-    detail: "围绕具体任务体验20+款AI产品，形成公开可读的产品横测报告和工具分工沉淀。",
+    title: "6个AI工具工作流",
+    detail: "体验21款AI产品后，沉淀出ChatGPT/Claude/DeepSeek/Codex/秘塔/Coze按任务分工的协作流程。",
   },
   {
-    title: "Coze/RAG/Agent作品",
-    detail: "计划中或进行中，用于补齐知识库问答、Agent和工作流设计案例。",
+    title: "垂直行业+AI结合",
+    detail: "幕墙建模交付经验 + RAG知识库方向探索，正在搭建垂直行业AI问答原型。",
   },
 ];
 
@@ -122,11 +127,7 @@ export const projects: Project[] = [
     missing: ["真实项目截图", "Demo链接", "GitHub链接", "项目复盘"],
     next: "补充功能范围、关键页面截图、遇到的问题和下一版计划。",
     tags: ["MVP搭建", "AI编程", "Supabase", "网页端应用"],
-    links: [
-      { label: "Demo【待补充】", href: "#", placeholder: true },
-      { label: "GitHub【待补充】", href: "#", placeholder: true },
-      { label: "项目复盘【待补充】", href: "#", placeholder: true },
-    ],
+    links: [],
   },
   {
     id: "ai-products-report",
@@ -136,16 +137,15 @@ export const projects: Project[] = [
     image: "/images/ai-products-report-placeholder.png",
     imageFallback: "图片待补充：AI产品横测报告截图",
     imageAlt: "20款以上AI产品体验横测报告截图占位",
-    why: "希望判断不同AI产品在具体任务中的适配度、优势边界和工具分工，而不是只停留在功能介绍。",
-    did: "体验20+款AI产品，围绕长文总结、项目包装、AI产品功能清单、AI边界说明等任务进行横向比较。",
-    progress: "已形成公开报告，覆盖20+款AI产品、多类测试任务和工具分工沉淀。",
-    proves: ["产品体验分析", "任务适配判断", "工具边界意识", "结构化表达"],
-    missing: ["报告截图", "典型输出截图", "原始Prompt"],
+    why: "AI产品经理不能只会用工具，还要能判断不同AI产品在具体任务中的适配度、优势边界和失败场景——不只是'哪个强'，而是'哪个合适'。",
+    did: "体验21款AI产品（通用助手8款、AI搜索2款、RAG/知识库3款、Agent 2款、AI编程7款），围绕长文总结、项目包装、功能清单、AI边界说明4个真实任务进行横向比较，按7个评价维度打分。",
+    progress: "已形成公开报告，覆盖21款产品×4类任务×7维度评价，最终沉淀6个工具工作流。",
+    proves: ["产品体验分析", "任务适配判断", "工具边界识别", "结构化报告沉淀", "工具协同工作流设计"],
+    missing: ["典型任务对比截图", "原始Prompt", "输出样例"],
     next: "补充3-5组典型输出截图和原始Prompt，让测试过程更容易被招聘方验证。",
-    tags: ["产品分析", "AI工具横测", "任务适配", "报告沉淀"],
+    tags: ["产品分析", "21款AI横测", "任务适配", "7维评价", "6工具工作流"],
     links: [
-      { label: "打开Notion报告", href: links.aiReport },
-      { label: "对比案例【待补充】", href: "#", placeholder: true },
+      { label: "查看Notion完整报告", href: links.aiReport },
     ],
   },
   {
@@ -163,10 +163,7 @@ export const projects: Project[] = [
     missing: ["需求文档", "知识库材料", "流程图/截图", "Demo链接"],
     next: "优先确定一个小场景，完成可演示Bot或知识库问答原型。",
     tags: ["Coze", "RAG", "Agent", "知识库问答"],
-    links: [
-      { label: "Demo【待补充】", href: "#", placeholder: true },
-      { label: "流程图【待补充】", href: "#", placeholder: true },
-    ],
+    links: [],
   },
 ];
 
@@ -239,46 +236,38 @@ export const reportSnapshot: ReportSnapshot = {
     keywords: ["任务适配", "技术边界", "工具分工", "求职准备"],
     conclusion: "AI产品不是强弱关系，而是任务适配关系",
   },
-  coreConclusion: "AI产品不是强弱关系，而是任务适配关系",
+  coreConclusion: "AI产品之间不是强弱关系，而是任务适配关系——选工具要看任务，不是看名气",
   findings: [
-    "AI产品不是强弱关系，而是任务适配关系",
-    "不同类型AI产品应该按任务分工使用",
-    "AI产品经理要能识别工具边界和失败场景",
+    "通用AI助手（ChatGPT/Claude/Codex）最适合信息整理、方案生成和求职材料打磨",
+    "AI搜索（秘塔/Perplexity）适合查资料和核验事实，秘塔的RAG搜索能力在免费工具中最强",
+    "RAG/知识库（Dify/FastGPT/Coze）适合基于固定资料回答问题，Dify和Coze各有优势",
+    "Agent/编程工具（Codex/Replit/Bolt）适合Demo搭建、代码修改和MVP推进",
+    "项目包装任务中，Claude边界意识最强（像风险审查员），Kimi容易编造'已实现'功能",
   ],
-  screenshots: [
-    {
-      title: "测试方法",
-      path: "/images/ai-report-method.png",
-      alt: "AI产品横测测试方法表截图",
-      fallback: "测试方法截图待补充",
-    },
-    {
-      title: "产品对比",
-      path: "/images/ai-report-comparison.png",
-      alt: "AI产品横测产品对比表截图",
-      fallback: "产品对比截图待补充",
-    },
-    {
-      title: "工具工作流",
-      path: "/images/ai-report-workflow.png",
-      alt: "6个AI工具工作流表截图",
-      fallback: "工具工作流截图待补充",
-    },
-  ],
+  screenshots: [],
   abilities: [
     {
       title: "产品分析能力",
-      detail: "能按任务场景比较AI产品",
+      detail: "能按任务场景（长文/包装/功能清单/边界）对21款AI产品分类比较，7维度评价打分",
     },
     {
       title: "边界意识",
-      detail: "能识别幻觉、夸大、跑偏等风险",
+      detail: "能识别幻觉、夸大、错误引用、任务跑偏等风险，在项目包装中坚持不编造不夸大",
     },
     {
       title: "工具协同能力",
-      detail: "能沉淀6个AI工具工作流",
+      detail: "沉淀ChatGPT（主力）/Claude（审查）/DeepSeek（推理）/Codex（搭建）/秘塔（查证）/Coze（原型）6工具工作流",
+    },
+    {
+      title: "结构化表达",
+      detail: "21款产品×4类任务×7维度的测试框架，可复用到其他产品分析场景",
     },
   ],
+  testFramework: {
+    tasks: ["长文总结", "项目包装", "AI产品功能清单", "AI边界说明"],
+    categories: ["通用AI助手 8款", "AI搜索 2款", "RAG/知识库 3款", "Agent/智能体 2款", "AI编程/应用搭建 7款"],
+    dimensions: ["任务完成度", "结构化能力", "可执行性", "边界意识", "事实可靠性", "交互成本", "差异化"],
+  },
 };
 
 export const nextActions: NextAction[] = [

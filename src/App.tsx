@@ -59,6 +59,7 @@ function ProjectVisual({ project }: { project: Project }) {
 }
 
 function ProjectLinks({ project }: { project: Project }) {
+  if (project.links.length === 0) return null;
   return (
     <div className="case-links">
       {project.links.map((link) => (
@@ -278,12 +279,14 @@ export function App() {
               作品卡片按产品案例组织：为什么做、做了什么、完成到哪里、证明什么能力、下一步补什么。
             </p>
           </div>
+
           <FeaturedCase project={featuredProject} />
           <div className="compact-case-grid">
             {secondaryProjects.map((project) => (
               <CompactCase project={project} key={project.id} />
             ))}
           </div>
+
           <article className="report-snapshot" aria-labelledby="report-snapshot-title">
             <div className="report-main-card">
               <div className="report-main-copy">
@@ -306,6 +309,32 @@ export function App() {
                   fallback={reportSnapshot.cover.title}
                   variant="cover"
                 />
+                <div className="test-framework" style={{ marginTop: "1rem" }}>
+                  <div style={{ marginBottom: "0.75rem" }}>
+                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>测试任务</strong>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                      {reportSnapshot.testFramework.tasks.map(t => (
+                        <span key={t} style={{ background: "#e8f0fe", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: "0.75rem" }}>
+                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>产品分类</strong>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                      {reportSnapshot.testFramework.categories.map(c => (
+                        <span key={c} style={{ background: "#e8f5e9", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{c}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>评价维度</strong>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                      {reportSnapshot.testFramework.dimensions.map(d => (
+                        <span key={d} style={{ background: "#fff3e0", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{d}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -321,19 +350,21 @@ export function App() {
               </div>
             </section>
 
-            <section className="report-screenshots" aria-label="证据截图区">
-              <h4>证据截图区</h4>
-              <div>
-                {reportSnapshot.screenshots.map((shot) => (
-                  <article className="report-shot-card" key={shot.path}>
-                    <div className="report-shot-media">
-                      <ReportImage path={shot.path} alt={shot.alt} fallback={shot.fallback} />
-                    </div>
-                    <strong>{shot.title}</strong>
-                  </article>
-                ))}
-              </div>
-            </section>
+            {reportSnapshot.screenshots.length > 0 && (
+              <section className="report-screenshots" aria-label="证据截图区">
+                <h4>证据截图区</h4>
+                <div>
+                  {reportSnapshot.screenshots.map((shot) => (
+                    <article className="report-shot-card" key={shot.path}>
+                      <div className="report-shot-media">
+                        <ReportImage path={shot.path} alt={shot.alt} fallback={shot.fallback} />
+                      </div>
+                      <strong>{shot.title}</strong>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
 
             <section className="report-abilities" aria-label="这份报告证明什么能力">
               <h4>这份报告证明什么能力</h4>
@@ -433,7 +464,7 @@ export function App() {
               <h2 id="contact-title">简历与联系</h2>
               <p>{profile.contactLine}</p>
               <div className="contact-list">
-                {contactItems.map((item) => {
+                {contactItems.filter(item => item.value && item.value !== "" && !item.value.includes("待补充")).map((item) => {
                   const Icon = contactIconMap[item.label as keyof typeof contactIconMap] ?? UserRound;
                   return (
                     <div className="contact-item" key={item.label}>
@@ -449,9 +480,9 @@ export function App() {
                   <Download size={18} aria-hidden="true" />
                   下载简历PDF
                 </a>
-                <a className="button secondary" href={links.github === "【待补充】" ? "#" : links.github}>
+                <a className="button secondary" href={links.github} target="_blank" rel="noreferrer">
                   <ArrowUpRight size={18} aria-hidden="true" />
-                  GitHub / 作品链接【待补充】
+                  GitHub
                 </a>
               </div>
             </article>
