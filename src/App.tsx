@@ -1,6 +1,7 @@
-import { useState } from "react";
+﻿import { useState, useEffect } from "react";
 import {
   ArrowUpRight,
+  ArrowUp,
   BadgeCheck,
   BriefcaseBusiness,
   Download,
@@ -13,11 +14,14 @@ import {
   UserRound,
 } from "lucide-react";
 import {
+  aiApplicationSkills,
+  capabilityMatrix,
   contactItems,
   experiences,
   heroProofs,
   links,
   nextActions,
+  portfolioProofChecklist,
   profile,
   projects,
   reportSnapshot,
@@ -26,6 +30,7 @@ import {
 } from "./data/portfolio";
 
 const navItems = [
+  { label: "匹配", href: "#fit" },
   { label: "作品", href: "#projects" },
   { label: "经历迁移", href: "#experience" },
   { label: "工具流", href: "#workflow" },
@@ -46,7 +51,7 @@ function ProjectVisual({ project }: { project: Project }) {
   return (
     <div className="project-visual">
       {!failed ? (
-        <img src={project.image} alt={project.imageAlt} onError={() => setFailed(true)} />
+        <img src={project.image} alt={project.imageAlt} onError={() => setFailed(true)} loading="lazy" />
       ) : (
         <div className="image-fallback">
           <PanelTop size={26} aria-hidden="true" />
@@ -93,7 +98,7 @@ function ReportImage({
   const [failed, setFailed] = useState(false);
 
   if (!failed) {
-    return <img src={path} alt={alt} onError={() => setFailed(true)} />;
+    return <img src={path} alt={alt} onError={() => setFailed(true)} loading="lazy" />;
   }
 
   if (variant === "cover") {
@@ -156,6 +161,12 @@ function FeaturedCase({ project }: { project: Project }) {
             ))}
           </div>
         </div>
+        {project.missing.length > 0 && (
+          <div className="case-gap">
+            <h4>为了求职还会补强</h4>
+            <p>{project.missing.join(" / ")}</p>
+          </div>
+        )}
         <ProjectLinks project={project} />
       </div>
       <ProjectVisual project={project} />
@@ -188,7 +199,7 @@ function CompactCase({ project }: { project: Project }) {
           </div>
           <div>
             <dt>待补充</dt>
-            <dd>{project.missing.join(" / ")}</dd>
+            <dd>{project.missing.length > 0 ? project.missing.join(" / ") : "暂无"}</dd>
           </div>
         </dl>
         <ProjectLinks project={project} />
@@ -199,6 +210,37 @@ function CompactCase({ project }: { project: Project }) {
 
 export function App() {
   const [featuredProject, ...secondaryProjects] = projects;
+  const [activeSection, setActiveSection] = useState("home");
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["home", "fit", "projects", "experience", "workflow", "next", "contact"];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+
+      setShowBackToTop(window.scrollY > 500);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="site-shell">
@@ -212,7 +254,11 @@ export function App() {
         </a>
         <nav className="nav" aria-label="主导航">
           {navItems.map((item) => (
-            <a href={item.href} key={item.href}>
+            <a
+              href={item.href}
+              key={item.href}
+              className={activeSection === item.href.replace("#", "") ? "active" : ""}
+            >
               {item.label}
             </a>
           ))}
@@ -269,6 +315,35 @@ export function App() {
               ))}
             </ol>
           </aside>
+        </section>
+
+        <section className="section fit-section" id="fit" aria-labelledby="fit-title">
+          <div className="section-heading">
+            <p className="eyebrow">Role Fit</p>
+            <h2 id="fit-title">把“我应该具备什么”直接变成作品集证据</h2>
+            <p>
+              这部分对应AI应用产品/产品助理岗位最关心的5件事：定位、AI应用能力、产品能力、工程交付和作品包装。
+            </p>
+          </div>
+          <div className="fit-grid">
+            {capabilityMatrix.map((item, index) => (
+              <article className="fit-card" key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{item.title}</h3>
+                <p className="fit-target">{item.target}</p>
+                <dl>
+                  <div>
+                    <dt>现在的证据</dt>
+                    <dd>{item.evidence}</dd>
+                  </div>
+                  <div>
+                    <dt>下一步补强</dt>
+                    <dd>{item.nextProof}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="section projects-section" id="projects" aria-labelledby="projects-title">
@@ -350,21 +425,49 @@ export function App() {
               </div>
             </section>
 
-            {reportSnapshot.screenshots.length > 0 && (
-              <section className="report-screenshots" aria-label="证据截图区">
-                <h4>证据截图区</h4>
-                <div>
-                  {reportSnapshot.screenshots.map((shot) => (
-                    <article className="report-shot-card" key={shot.path}>
-                      <div className="report-shot-media">
-                        <ReportImage path={shot.path} alt={shot.alt} fallback={shot.fallback} />
-                      </div>
-                      <strong>{shot.title}</strong>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
+            <section className="report-framework" aria-label="测试框架">
+              <h4>测试框架</h4>
+              <div className="framework-grid">
+                <article>
+                  <strong>4类任务</strong>
+                  <div className="mini-tag-row">
+                    {reportSnapshot.testFramework.tasks.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </article>
+                <article>
+                  <strong>产品类别</strong>
+                  <div className="mini-tag-row">
+                    {reportSnapshot.testFramework.categories.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </article>
+                <article>
+                  <strong>7个评价维度</strong>
+                  <div className="mini-tag-row">
+                    {reportSnapshot.testFramework.dimensions.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section className="report-screenshots" aria-label="证据截图区">
+              <h4>证据截图区</h4>
+              <div>
+                {reportSnapshot.screenshots.map((shot) => (
+                  <article className="report-shot-card" key={shot.path}>
+                    <div className="report-shot-media">
+                      <ReportImage path={shot.path} alt={shot.alt} fallback={shot.fallback} />
+                    </div>
+                    <strong>{shot.title}</strong>
+                  </article>
+                ))}
+              </div>
+            </section>
 
             <section className="report-abilities" aria-label="这份报告证明什么能力">
               <h4>这份报告证明什么能力</h4>
@@ -372,6 +475,21 @@ export function App() {
                 {reportSnapshot.abilities.map((item) => (
                   <article key={item.title}>
                     <strong>{item.title}</strong>
+                    <p>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="proof-checklist" aria-label="求职证据包">
+              <h4>求职证据包</h4>
+              <div>
+                {portfolioProofChecklist.map((item) => (
+                  <article className="proof-item" data-status={item.status} key={item.item}>
+                    <div>
+                      <strong>{item.item}</strong>
+                      <span>{item.status}</span>
+                    </div>
                     <p>{item.detail}</p>
                   </article>
                 ))}
@@ -404,7 +522,19 @@ export function App() {
           <div className="section-heading">
             <p className="eyebrow">AI Workflow</p>
             <h2 id="workflow-title">AI工具工作流：按任务分工，而不是堆工具名</h2>
-            <p>这些工具对应调研、拆解、搭建、复盘等不同工作阶段，后续可以继续补具体案例。</p>
+            <p>先展示AI应用岗位关心的能力栈，再展示我如何把不同工具放进调研、拆解、搭建和复盘流程。</p>
+          </div>
+          <div className="ai-skill-grid" aria-label="AI应用能力栈">
+            {aiApplicationSkills.map((skill) => (
+              <article className="ai-skill-card" key={skill.title}>
+                <div>
+                  <h3>{skill.title}</h3>
+                  <span>{skill.status}</span>
+                </div>
+                <p>{skill.evidence}</p>
+                <strong>{skill.next}</strong>
+              </article>
+            ))}
           </div>
           <div className="tool-board">
             {tools.map((tool) => (
@@ -482,13 +612,23 @@ export function App() {
                 </a>
                 <a className="button secondary" href={links.github} target="_blank" rel="noreferrer">
                   <ArrowUpRight size={18} aria-hidden="true" />
-                  GitHub
+                  GitHub / 作品链接
                 </a>
               </div>
             </article>
           </div>
         </section>
       </main>
+      {showBackToTop && (
+        <button
+          type="button"
+          className="back-to-top"
+          onClick={scrollToTop}
+          aria-label="返回顶部"
+        >
+          <ArrowUp size={18} />
+        </button>
+      )}
     </div>
   );
 }
