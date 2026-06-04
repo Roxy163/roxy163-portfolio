@@ -1,11 +1,15 @@
-﻿import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  ArrowUpRight,
   ArrowUp,
+  ArrowUpRight,
   BadgeCheck,
+  BookOpenCheck,
   BriefcaseBusiness,
   Download,
+  FileText,
   Github,
+  Globe2,
+  LayoutDashboard,
   Mail,
   MapPin,
   MessageCircle,
@@ -30,11 +34,10 @@ import {
 } from "./data/portfolio";
 
 const navItems = [
-  { label: "匹配", href: "#fit" },
   { label: "作品", href: "#projects" },
+  { label: "能力证据", href: "#proof" },
   { label: "经历迁移", href: "#experience" },
-  { label: "工具流", href: "#workflow" },
-  { label: "30天", href: "#next" },
+  { label: "30天计划", href: "#next" },
   { label: "联系", href: "#contact" },
 ];
 
@@ -45,18 +48,27 @@ const contactIconMap = {
   简历PDF: Download,
 };
 
+const projectIconMap = {
+  "tarot-app": Sparkles,
+  "ai-products-report": FileText,
+  "tarot-dify-assistant": BookOpenCheck,
+  "portfolio-site": LayoutDashboard,
+};
+
 function ProjectVisual({ project }: { project: Project }) {
   const [failed, setFailed] = useState(false);
+  const Icon = projectIconMap[project.id as keyof typeof projectIconMap] ?? PanelTop;
 
   return (
-    <div className="project-visual">
+    <div className="project-visual" data-project={project.id}>
       {!failed ? (
         <img src={project.image} alt={project.imageAlt} onError={() => setFailed(true)} loading="lazy" />
       ) : (
-        <div className="image-fallback">
-          <PanelTop size={26} aria-hidden="true" />
+        <div className="visual-fallback">
+          <Icon size={28} aria-hidden="true" />
+          <span>{project.label}</span>
           <strong>{project.imageFallback}</strong>
-          <span>{project.image}</span>
+          <small>{project.tags.slice(0, 4).join(" / ")}</small>
         </div>
       )}
     </div>
@@ -65,6 +77,7 @@ function ProjectVisual({ project }: { project: Project }) {
 
 function ProjectLinks({ project }: { project: Project }) {
   if (project.links.length === 0) return null;
+
   return (
     <div className="case-links">
       {project.links.map((link) => (
@@ -88,135 +101,60 @@ function ProjectScreenshots({ project }: { project: Project }) {
   if (!project.screenshots?.length) return null;
 
   return (
-    <div className="case-screenshot-strip" aria-label={`${project.title}证据截图`}>
-      {project.screenshots.map((shot) => (
-        <figure key={shot.path}>
-          <img src={shot.path} alt={shot.alt} loading="lazy" />
-          <figcaption>{shot.title}</figcaption>
-        </figure>
-      ))}
-    </div>
-  );
-}
-
-function ReportImage({
-  path,
-  alt,
-  fallback,
-  variant = "screenshot",
-}: {
-  path: string;
-  alt: string;
-  fallback: string;
-  variant?: "cover" | "screenshot";
-}) {
-  const [failed, setFailed] = useState(false);
-
-  if (!failed) {
-    return <img src={path} alt={alt} onError={() => setFailed(true)} loading="lazy" />;
-  }
-
-  if (variant === "cover") {
-    return (
-      <div className="report-cover-placeholder">
-        <span>Research Case</span>
-        <h4>{reportSnapshot.cover.title}</h4>
-        <p>{reportSnapshot.cover.subtitle}</p>
-        <div>
-          {reportSnapshot.cover.keywords.map((keyword) => (
-            <strong key={keyword}>{keyword}</strong>
-          ))}
-        </div>
-        <em>{reportSnapshot.cover.conclusion}</em>
+    <div className="case-screenshots" aria-label={`${project.title}截图证据`}>
+      <span>截图证据</span>
+      <div>
+        {project.screenshots.map((shot) => (
+          <figure key={shot.path}>
+            <img src={shot.path} alt={shot.alt} loading="lazy" />
+            <figcaption>{shot.title}</figcaption>
+          </figure>
+        ))}
       </div>
-    );
-  }
-
-  return (
-    <div className="report-shot-placeholder">
-      <PanelTop size={22} aria-hidden="true" />
-      <strong>{fallback}</strong>
-      <span>{path}</span>
     </div>
   );
 }
 
-function FeaturedCase({ project }: { project: Project }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const Icon = projectIconMap[project.id as keyof typeof projectIconMap] ?? PanelTop;
+
   return (
-    <article className="featured-case">
-      <div className="case-content">
+    <article className="project-card">
+      <ProjectVisual project={project} />
+      <div className="project-card-body">
         <div className="case-kicker">
+          <span>{String(index + 1).padStart(2, "0")}</span>
           <span>{project.label}</span>
-          <span>{project.status}</span>
+          <strong>{project.status}</strong>
         </div>
-        <h3>{project.title}</h3>
-        <div className="case-grid">
+        <h3>
+          <Icon size={21} aria-hidden="true" />
+          {project.title}
+        </h3>
+        <p className="project-why">{project.why}</p>
+
+        <div className="project-evidence">
           <div>
-            <h4>我为什么做</h4>
-            <p>{project.why}</p>
-          </div>
-          <div>
-            <h4>我做了什么</h4>
+            <span>我做了什么</span>
             <p>{project.did}</p>
           </div>
           <div>
-            <h4>当前完成到哪里</h4>
+            <span>现在完成到哪里</span>
             <p>{project.progress}</p>
           </div>
-          <div>
-            <h4>下一步补什么</h4>
-            <p>{project.next}</p>
-          </div>
         </div>
-        <div className="case-proof">
-          <h4>这个作品证明</h4>
-          <div className="tag-row">
-            {project.proves.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-        </div>
-        {project.missing.length > 0 && (
-          <div className="case-gap">
-            <h4>为了求职还会补强</h4>
-            <p>{project.missing.join(" / ")}</p>
-          </div>
-        )}
-        <ProjectLinks project={project} />
-      </div>
-      <ProjectVisual project={project} />
-    </article>
-  );
-}
 
-function CompactCase({ project }: { project: Project }) {
-  return (
-    <article className="compact-case">
-      <ProjectVisual project={project} />
-      <div className="compact-case-body">
-        <div className="case-kicker">
-          <span>{project.label}</span>
-          <span>{project.status}</span>
+        <div className="tag-row" aria-label={`${project.title}能力标签`}>
+          {project.proves.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
         </div>
-        <h3>{project.title}</h3>
-        <dl className="case-notes">
-          <div>
-            <dt>为什么做</dt>
-            <dd>{project.why}</dd>
-          </div>
-          <div>
-            <dt>做了什么</dt>
-            <dd>{project.did}</dd>
-          </div>
-          <div>
-            <dt>证明能力</dt>
-            <dd>{project.proves.join(" / ")}</dd>
-          </div>
-          <div>
-            <dt>待补充</dt>
-            <dd>{project.missing.length > 0 ? project.missing.join(" / ") : "暂无"}</dd>
-          </div>
-        </dl>
+
+        <div className="project-next">
+          <span>下一步补强</span>
+          <p>{project.next}</p>
+        </div>
+
         <ProjectScreenshots project={project} />
         <ProjectLinks project={project} />
       </div>
@@ -224,15 +162,139 @@ function CompactCase({ project }: { project: Project }) {
   );
 }
 
+function ReportBrief() {
+  return (
+    <article className="report-brief" aria-labelledby="report-brief-title">
+      <div className="report-copy">
+        <p className="eyebrow">Research Method</p>
+        <h3 id="report-brief-title">{reportSnapshot.title}</h3>
+        <p>{reportSnapshot.summary}</p>
+        <div className="report-conclusion">
+          <span>核心结论</span>
+          <strong>{reportSnapshot.coreConclusion}</strong>
+        </div>
+        <a className="button secondary" href={reportSnapshot.url} target="_blank" rel="noreferrer">
+          查看Notion全文
+          <ArrowUpRight size={18} aria-hidden="true" />
+        </a>
+      </div>
+
+      <div className="report-framework">
+        <div>
+          <strong>4类测试任务</strong>
+          <div className="mini-tag-row">
+            {reportSnapshot.testFramework.tasks.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <strong>产品范围</strong>
+          <div className="mini-tag-row">
+            {reportSnapshot.testFramework.categories.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <strong>7个评价维度</strong>
+          <div className="mini-tag-row">
+            {reportSnapshot.testFramework.dimensions.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ProofSection() {
+  return (
+    <section className="section proof-section" id="proof" aria-labelledby="proof-title">
+      <div className="section-heading">
+        <p className="eyebrow">Role Fit</p>
+        <h2 id="proof-title">招聘方关心的能力，分别对应哪些证据</h2>
+        <p>这里不堆“我会什么”，而是把能力放回可检查的作品和下一步补强动作里。</p>
+      </div>
+
+      <div className="capability-list">
+        {capabilityMatrix.map((item, index) => (
+          <article className="capability-item" key={item.title}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <h3>{item.title}</h3>
+              <strong>{item.target}</strong>
+            </div>
+            <p>{item.evidence}</p>
+            <p>{item.nextProof}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="proof-grid">
+        <section aria-label="AI应用能力栈">
+          <h3>AI应用能力栈</h3>
+          <div className="ai-skill-grid">
+            {aiApplicationSkills.map((skill) => (
+              <article className="ai-skill-card" key={skill.title}>
+                <div>
+                  <strong>{skill.title}</strong>
+                  <span>{skill.status}</span>
+                </div>
+                <p>{skill.evidence}</p>
+                <small>{skill.next}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section aria-label="求职证据包">
+          <h3>求职证据包状态</h3>
+          <div className="proof-checklist">
+            {portfolioProofChecklist.map((item) => (
+              <article className="proof-item" data-status={item.status} key={item.item}>
+                <div>
+                  <strong>{item.item}</strong>
+                  <span>{item.status}</span>
+                </div>
+                <p>{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="workflow-panel" aria-labelledby="workflow-title">
+        <div>
+          <p className="eyebrow">AI Workflow</p>
+          <h3 id="workflow-title">工具流按任务分工，而不是堆工具名</h3>
+        </div>
+        <div className="tool-board">
+          {tools.map((tool) => (
+            <article className="tool-row" key={tool.tool}>
+              <div>
+                <span>{tool.role}</span>
+                <h4>{tool.tool}</h4>
+              </div>
+              <p>{tool.useCase}</p>
+              <strong>{tool.output}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
+    </section>
+  );
+}
+
 export function App() {
-  const [featuredProject, ...secondaryProjects] = projects;
   const [activeSection, setActiveSection] = useState("home");
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "fit", "projects", "experience", "workflow", "next", "contact"];
-      const scrollPosition = window.scrollY + 200;
+      const sections = ["home", "projects", "proof", "experience", "next", "contact"];
+      const scrollPosition = window.scrollY + 180;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -245,16 +307,16 @@ export function App() {
         }
       }
 
-      setShowBackToTop(window.scrollY > 500);
+      setShowBackToTop(window.scrollY > 520);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const scrollToTop = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -264,7 +326,7 @@ export function App() {
         <a className="brand" href="#home" aria-label="回到首页">
           <span className="brand-mark">AI</span>
           <span>
-            <strong>{profile.name} · 产品作品集</strong>
+            <strong>{profile.name} · AI应用作品集</strong>
             <small>{profile.location}</small>
           </span>
         </a>
@@ -290,6 +352,7 @@ export function App() {
             </p>
             <h1>{profile.headline}</h1>
             <p className="hero-summary">{profile.summary}</p>
+
             <div className="role-strip" aria-label="目标岗位">
               <span>目标岗位</span>
               <div>
@@ -298,18 +361,20 @@ export function App() {
                 ))}
               </div>
             </div>
+
             <div className="positioning-note">
               <span>一句话定位</span>
               <p>{profile.positioning}</p>
             </div>
+
             <div className="hero-actions">
               <a className="button primary" href="#projects">
                 <BriefcaseBusiness size={18} aria-hidden="true" />
-                查看作品集
+                查看四个作品
               </a>
               <a className="button secondary" href="#contact">
                 <Mail size={18} aria-hidden="true" />
-                查看简历 / 联系我
+                简历 / 联系方式
               </a>
             </div>
           </div>
@@ -317,7 +382,7 @@ export function App() {
           <aside className="evidence-panel" aria-label={profile.proofIntro}>
             <div className="panel-heading">
               <span>{profile.proofIntro}</span>
-              <h2>不是口号，是目前能展示的证据</h2>
+              <h2>先让招聘方知道该看什么</h2>
             </div>
             <ol className="evidence-list">
               {heroProofs.map((item, index) => (
@@ -333,192 +398,31 @@ export function App() {
           </aside>
         </section>
 
-        <section className="section fit-section" id="fit" aria-labelledby="fit-title">
-          <div className="section-heading">
-            <p className="eyebrow">Role Fit</p>
-            <h2 id="fit-title">把“我应该具备什么”直接变成作品集证据</h2>
-            <p>
-              这部分对应AI应用产品/产品助理岗位最关心的5件事：定位、AI应用能力、产品能力、工程交付和作品包装。
-            </p>
-          </div>
-          <div className="fit-grid">
-            {capabilityMatrix.map((item, index) => (
-              <article className="fit-card" key={item.title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{item.title}</h3>
-                <p className="fit-target">{item.target}</p>
-                <dl>
-                  <div>
-                    <dt>现在的证据</dt>
-                    <dd>{item.evidence}</dd>
-                  </div>
-                  <div>
-                    <dt>下一步补强</dt>
-                    <dd>{item.nextProof}</dd>
-                  </div>
-                </dl>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="section projects-section" id="projects" aria-labelledby="projects-title">
           <div className="section-heading">
             <p className="eyebrow">Portfolio</p>
-            <h2 id="projects-title">代表作品：先看我做过什么</h2>
+            <h2 id="projects-title">四个展示物：从可体验产品到分析文档</h2>
             <p>
-              作品卡片按产品案例组织：为什么做、做了什么、完成到哪里、证明什么能力、下一步补什么。
+              阅读顺序建议：先点在线Demo和报告，再看每个项目的能力标签和待补证据。截图只放在对应项目下面，避免材料混在一起。
             </p>
           </div>
 
-          <FeaturedCase project={featuredProject} />
-          <div className="compact-case-grid">
-            {secondaryProjects.map((project) => (
-              <CompactCase project={project} key={project.id} />
+          <div className="project-grid">
+            {projects.map((project, index) => (
+              <ProjectCard project={project} index={index} key={project.id} />
             ))}
           </div>
 
-          <article className="report-snapshot" aria-labelledby="report-snapshot-title">
-            <div className="report-main-card">
-              <div className="report-main-copy">
-                <p className="eyebrow">Research Report</p>
-                <h3 id="report-snapshot-title">{reportSnapshot.title}</h3>
-                <p>{reportSnapshot.summary}</p>
-                <div className="report-conclusion">
-                  <span>核心结论</span>
-                  <strong>{reportSnapshot.coreConclusion}</strong>
-                </div>
-                <a className="button secondary" href={reportSnapshot.url} target="_blank" rel="noreferrer">
-                  查看Notion全文
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </a>
-              </div>
-              <div className="report-cover">
-                <ReportImage
-                  path={reportSnapshot.coverImage}
-                  alt={reportSnapshot.cover.title}
-                  fallback={reportSnapshot.cover.title}
-                  variant="cover"
-                />
-                <div className="test-framework" style={{ marginTop: "1rem" }}>
-                  <div style={{ marginBottom: "0.75rem" }}>
-                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>测试任务</strong>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                      {reportSnapshot.testFramework.tasks.map(t => (
-                        <span key={t} style={{ background: "#e8f0fe", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: "0.75rem" }}>
-                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>产品分类</strong>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                      {reportSnapshot.testFramework.categories.map(c => (
-                        <span key={c} style={{ background: "#e8f5e9", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{c}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <strong style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem" }}>评价维度</strong>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                      {reportSnapshot.testFramework.dimensions.map(d => (
-                        <span key={d} style={{ background: "#fff3e0", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.8rem" }}>{d}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <section className="report-findings" aria-label="关键发现">
-              <h4>关键发现</h4>
-              <div>
-                {reportSnapshot.findings.map((item, index) => (
-                  <article key={item}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <p>{item}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="report-framework" aria-label="测试框架">
-              <h4>测试框架</h4>
-              <div className="framework-grid">
-                <article>
-                  <strong>4类任务</strong>
-                  <div className="mini-tag-row">
-                    {reportSnapshot.testFramework.tasks.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-                <article>
-                  <strong>产品类别</strong>
-                  <div className="mini-tag-row">
-                    {reportSnapshot.testFramework.categories.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-                <article>
-                  <strong>7个评价维度</strong>
-                  <div className="mini-tag-row">
-                    {reportSnapshot.testFramework.dimensions.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-              </div>
-            </section>
-
-            <section className="report-screenshots" aria-label="证据截图区">
-              <h4>证据截图区</h4>
-              <div>
-                {reportSnapshot.screenshots.map((shot) => (
-                  <article className="report-shot-card" key={shot.path}>
-                    <div className="report-shot-media">
-                      <ReportImage path={shot.path} alt={shot.alt} fallback={shot.fallback} />
-                    </div>
-                    <strong>{shot.title}</strong>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="report-abilities" aria-label="这份报告证明什么能力">
-              <h4>这份报告证明什么能力</h4>
-              <div>
-                {reportSnapshot.abilities.map((item) => (
-                  <article key={item.title}>
-                    <strong>{item.title}</strong>
-                    <p>{item.detail}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="proof-checklist" aria-label="求职证据包">
-              <h4>求职证据包</h4>
-              <div>
-                {portfolioProofChecklist.map((item) => (
-                  <article className="proof-item" data-status={item.status} key={item.item}>
-                    <div>
-                      <strong>{item.item}</strong>
-                      <span>{item.status}</span>
-                    </div>
-                    <p>{item.detail}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </article>
+          <ReportBrief />
         </section>
+
+        <ProofSection />
 
         <section className="section experience-section" id="experience" aria-labelledby="experience-title">
           <div className="section-heading">
             <p className="eyebrow">Transfer</p>
-            <h2 id="experience-title">我的能力如何从经历中迁移而来</h2>
-            <p>不把过往经历包装成夸张成果，只说明它们如何支撑AI产品助理和AI应用搭建工作。</p>
+            <h2 id="experience-title">过往经历如何迁移到 AI 产品助理工作</h2>
+            <p>不把过往经历包装成夸张成果，只说明它们如何支撑用户理解、复杂交付和AI应用实践。</p>
           </div>
           <div className="transfer-timeline">
             {experiences.map((item, index) => (
@@ -534,49 +438,17 @@ export function App() {
           </div>
         </section>
 
-        <section className="section workflow-section" id="workflow" aria-labelledby="workflow-title">
-          <div className="section-heading">
-            <p className="eyebrow">AI Workflow</p>
-            <h2 id="workflow-title">AI工具工作流：按任务分工，而不是堆工具名</h2>
-            <p>先展示AI应用岗位关心的能力栈，再展示我如何把不同工具放进调研、拆解、搭建和复盘流程。</p>
-          </div>
-          <div className="ai-skill-grid" aria-label="AI应用能力栈">
-            {aiApplicationSkills.map((skill) => (
-              <article className="ai-skill-card" key={skill.title}>
-                <div>
-                  <h3>{skill.title}</h3>
-                  <span>{skill.status}</span>
-                </div>
-                <p>{skill.evidence}</p>
-                <strong>{skill.next}</strong>
-              </article>
-            ))}
-          </div>
-          <div className="tool-board">
-            {tools.map((tool) => (
-              <article className="tool-row" key={tool.tool}>
-                <div>
-                  <span>{tool.role}</span>
-                  <h3>{tool.tool}</h3>
-                </div>
-                <p>{tool.useCase}</p>
-                <strong>{tool.output}</strong>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="section next-section" id="next" aria-labelledby="next-title">
           <div className="section-heading">
             <p className="eyebrow">First 30 Days</p>
-            <h2 id="next-title">我能在入职前30天交付什么</h2>
-            <p>按初级AI产品 / 产品助理的合理边界来写：能帮团队把信息整理清楚，把小原型跑起来。</p>
+            <h2 id="next-title">入职前30天，我会优先补齐这些可交付物</h2>
+            <p>按初级AI产品 / 产品助理的合理边界来写：把调研、需求、原型、测试和复盘推进成可复用材料。</p>
           </div>
           <div className="next-layout">
             <div className="next-summary">
               <Sparkles size={22} aria-hidden="true" />
-              <h3>我会优先做清楚、可复用、能被团队接着用的材料。</h3>
-              <p>不承诺夸张结果，重点是把调研、需求、原型、测试和复盘推进成可交付物。</p>
+              <h3>重点不是夸张承诺，而是把信息整理清楚，把小原型跑起来。</h3>
+              <p>这些动作能直接补强当前作品集，也能迁移到团队里的产品助理工作。</p>
             </div>
             <ol className="next-list">
               {nextActions.map((item) => (
@@ -610,16 +482,18 @@ export function App() {
               <h2 id="contact-title">简历与联系</h2>
               <p>{profile.contactLine}</p>
               <div className="contact-list">
-                {contactItems.filter(item => item.value && item.value !== "" && !item.value.includes("待补充")).map((item) => {
-                  const Icon = contactIconMap[item.label as keyof typeof contactIconMap] ?? UserRound;
-                  return (
-                    <div className="contact-item" key={item.label}>
-                      <Icon size={18} aria-hidden="true" />
-                      <span>{item.label}</span>
-                      <strong>{item.value}</strong>
-                    </div>
-                  );
-                })}
+                {contactItems
+                  .filter((item) => item.value && item.value !== "" && !item.value.includes("待补充"))
+                  .map((item) => {
+                    const Icon = contactIconMap[item.label as keyof typeof contactIconMap] ?? UserRound;
+                    return (
+                      <div className="contact-item" key={item.label}>
+                        <Icon size={18} aria-hidden="true" />
+                        <span>{item.label}</span>
+                        <strong>{item.value}</strong>
+                      </div>
+                    );
+                  })}
               </div>
               <div className="contact-actions">
                 <a className="button primary" href={links.resumePdf} download>
@@ -627,7 +501,7 @@ export function App() {
                   下载简历PDF
                 </a>
                 <a className="button secondary" href={links.github} target="_blank" rel="noreferrer">
-                  <ArrowUpRight size={18} aria-hidden="true" />
+                  <Globe2 size={18} aria-hidden="true" />
                   GitHub / 作品链接
                 </a>
               </div>
@@ -635,13 +509,9 @@ export function App() {
           </div>
         </section>
       </main>
+
       {showBackToTop && (
-        <button
-          type="button"
-          className="back-to-top"
-          onClick={scrollToTop}
-          aria-label="返回顶部"
-        >
+        <button type="button" className="back-to-top" onClick={scrollToTop} aria-label="返回顶部">
           <ArrowUp size={18} />
         </button>
       )}

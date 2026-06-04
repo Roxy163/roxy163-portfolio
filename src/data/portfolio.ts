@@ -1,4 +1,4 @@
-﻿// 用户以后主要改这里：
+// 用户以后主要改这里：
 // 1. 修改个人介绍、目标岗位、城市和联系方式：profile / links
 // 2. 修改项目内容、图片路径、Demo/GitHub/报告链接：projects
 // 3. 修改岗位匹配、AI应用能力、经历迁移和30天计划：capabilityMatrix / aiApplicationSkills / experiences / nextActions
@@ -104,6 +104,7 @@ export const links = {
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
   portfolio: "https://roxy163.netlify.app",
+  tarotApp: "https://tarot-pavilion.netlify.app",
   difyAssistant: "https://udify.app/chat/yE8PgcVCb2t5jOIp",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
@@ -113,185 +114,98 @@ export const profile = {
   name: "Roxy163",
   location: "武汉本地或远程",
   targetRoles: ["AI应用产品助理", "AI应用搭建", "AI产品运营", "初级AI产品工程"],
-  headline: "我把用户问题拆成AI应用，并做成可运行MVP",
-  positioning: "不是纯算法背景，而是产品理解 + AI工具协同 + 前端交付的AI应用实践者",
+  headline: "AI应用产品助理作品集",
+  positioning: "用产品理解、AI工具协同和前端交付，把想法推进成可体验的AI应用。",
   summary:
-    "本科土木工程，做过用户运营和玻璃幕墙建模设计。现在用已上线的AI应用、Dify知识库问答助手和AI产品横测报告，证明自己能把真实场景拆成可演示、可复盘、可迭代的AI产品。",
-  proofIntro: "目前最能证明我的三件事",
+    "这个站点只展示四个招聘方能直接检查的东西：塔罗研习阁 App、20+ AI软件测评文档、塔罗知识库问答助手，以及这个作品集网站本身。每个作品都写清楚我做了什么、现在完成到哪里、它能证明什么能力。",
+  proofIntro: "四个可验证展示物",
   contactLine: "欢迎联系我交流AI应用产品、AI应用搭建、产品助理或AI产品运营相关机会。",
 };
 
 export const heroProofs = [
   {
-    title: "已上线AI应用MVP",
-    detail:
-      "塔罗研习阁已支持在线体验、访客模式、注册用户、云端数据同步、AI识图与解读，能展示从想法到上线的闭环。",
+    title: "塔罗研习阁 App",
+    detail: "已部署到 Netlify，展示从需求拆解、AI识图解读、用户体系到云端同步的MVP闭环。",
   },
   {
-    title: "可验证的AI产品分析",
-    detail:
-      "横测21款AI产品，按4类真实任务和7个评价维度比较，沉淀出工具适配、边界识别和协同工作流。",
+    title: "20+ AI软件测评文档",
+    detail: "用真实任务横测21款AI产品，沉淀任务适配、工具边界和产品分析方法。",
   },
   {
-    title: "清楚的转型路径",
-    detail:
-      "把用户运营的反馈理解、幕墙建模的复杂交付经验，迁移到AI应用产品助理和AI应用搭建工作里。",
-  },
-];
-
-export const capabilityMatrix: CapabilityProof[] = [
-  {
-    title: "清晰定位",
-    target: "AI应用产品 / 产品助理 / 应用搭建",
-    evidence:
-      "首页直接说明目标岗位、转型路径和一句话定位：用AI把用户问题做成可运行MVP。",
-    nextProof:
-      "简历、自我介绍、GitHub README保持同一条主线，避免同时包装成算法、设计、运营多个方向。",
+    title: "塔罗知识库问答助手",
+    detail: "用 Dify 做垂直知识库问答，展示RAG资料整理、提示词边界和测试验证意识。",
   },
   {
-    title: "AI应用能力",
-    target: "Prompt、模型API、RAG、Agent、评估与边界",
-    evidence:
-      "塔罗App已接入Gemini API，包含AI识图和解读；塔罗研习阁助手已用Dify搭建知识库问答，并公开可体验。",
-    nextProof:
-      "继续补充测试问题、失败案例、召回截图和提示词迭代记录，让RAG案例更容易被招聘方验证。",
-  },
-  {
-    title: "产品能力",
-    target: "用户、痛点、MVP验证、反馈转需求",
-    evidence:
-      "每个项目都写清楚为什么做、做了什么、完成度、证明能力和下一步，不只罗列技术名词。",
-    nextProof:
-      "为塔罗App补一页复盘：目标用户、核心场景、用户反馈、需求优先级和下一版迭代。",
-  },
-  {
-    title: "工程交付能力",
-    target: "React、TypeScript、Firebase、Netlify、部署安全",
-    evidence:
-      "塔罗App使用React/TypeScript/Firebase/Netlify；已做Auth、Firestore、Storage和Gemini代理层。",
-    nextProof:
-      "补架构图、部署说明、构建记录和3分钟演示视频，让工程能力更容易被招聘方检查。",
-  },
-  {
-    title: "作品包装能力",
-    target: "在线Demo、源码、截图、Prompt、评估、迭代记录",
-    evidence:
-      "作品集已经集中展示在线Demo、源码、Notion报告和目标岗位证据链。",
-    nextProof:
-      "把截图、原始Prompt、失败样例、评估表和用户反馈做成可公开查看的证据包。",
-  },
-];
-
-export const aiApplicationSkills: AISkill[] = [
-  {
-    title: "Prompt设计与任务拆解",
-    status: "已具备",
-    evidence: "AI产品横测围绕长文总结、项目包装、功能清单、边界说明等任务做对比。",
-    next: "补充3组原始Prompt、模型输出和人工修订记录。",
-  },
-  {
-    title: "模型API与代理层",
-    status: "已具备",
-    evidence: "塔罗App通过Gemini API完成图像识别和智能解读，并使用Netlify Function保护密钥。",
-    next: "把代理层的限流、CORS、错误处理写进README。",
-  },
-  {
-    title: "RAG / 知识库问答",
-    status: "已具备",
-    evidence: "已用Dify搭建“塔罗研习阁助手”，将塔罗学习笔记整理为知识库，支持牌义查阅、正逆位理解、复盘方法和边界问题回答。",
-    next: "继续补充测试题集、未命中样例和知识库分段迭代记录。",
-  },
-  {
-    title: "Agent / 工作流编排",
-    status: "进行中",
-    evidence: "已完成Dify聊天助手形态，理解知识库、提示词、召回设置和发布链接的组合方式。",
-    next: "后续再补工作流或Agent节点版本，展示任务流、节点截图和失败兜底逻辑。",
-  },
-  {
-    title: "输出评估与安全边界",
-    status: "已具备",
-    evidence: "横测报告记录幻觉、夸大、错误引用、任务跑偏等风险，并坚持项目包装不编造。",
-    next: "把评估维度做成公开表格：事实可靠性、可执行性、边界意识、交互成本。",
-  },
-  {
-    title: "部署与工程协同",
-    status: "已具备",
-    evidence: "作品集和塔罗App均已上线，能使用Codex协助本地开发、调试、构建和页面迭代。",
-    next: "在仓库中补齐README、环境变量示例、部署步骤和常见问题。",
+    title: "个人作品集网站",
+    detail: "用 React + TypeScript 组织作品证据链，让招聘方能快速判断岗位匹配度。",
   },
 ];
 
 export const projects: Project[] = [
   {
     id: "tarot-app",
-    title: "塔罗研习阁：AI辅助自我探索记录工具",
-    label: "Featured Case",
-    status: "已上线，支持访客模式和注册用户云端同步",
+    title: "塔罗研习阁：AI塔罗记录与自我探索 App",
+    label: "AI App MVP",
+    status: "已部署到 Netlify，可在线体验",
     featured: true,
-    image: "/images/tarot-app-placeholder.png",
-    imageFallback: "图片待补充：塔罗研习阁截图",
-    imageAlt: "塔罗研习阁App截图占位",
+    image: "/images/tarot-app/home.png",
+    imageFallback: "待补真实截图：首页、AI解读、登录同步、移动端",
+    imageAlt: "塔罗研习阁 App 首页与AI解读功能截图",
     why:
-      "情绪记录和自我复盘的启动成本较高，年轻用户需要一个更轻、更愿意打开的入口。塔罗牌只是交互载体，核心是用AI解读降低表达和整理成本。",
+      "情绪记录和自我复盘的启动成本较高，我把塔罗牌作为轻量入口，让用户更愿意表达问题并沉淀记录。",
     did:
-      "从0到1完成MVP：需求定义、功能拆解、React/TypeScript前端、Firebase Auth/Firestore/Storage、Netlify部署、Gemini API识图与解读。AI调用不直接暴露在前端，而是通过Netlify Function代理，并加入CORS、鉴权和基础限流。",
+      "完成从需求定义、功能拆解到前端实现和部署的MVP；接入 Gemini API 做识图与解读，并通过代理层保护密钥。",
     progress:
-      "已上线可体验。当前支持访客模式、注册登录、云端数据同步、AI解读、情绪记录、牌义注解、灵数设置和移动端适配。",
-    proves: [
-      "0→1产品闭环",
-      "AI模型API接入",
-      "Firebase全栈",
-      "API安全意识",
-      "移动端交付",
-      "MVP迭代意识",
-    ],
+      "已支持访客模式、注册登录、云端同步、AI解读、牌义注解、灵数设置和移动端适配。",
+    proves: ["0→1产品闭环", "AI模型API接入", "前端交付", "数据同步", "移动端适配", "上线部署"],
     missing: ["产品架构图", "3分钟演示视频", "用户反馈→需求清单", "AI输出评估样例"],
     next:
-      "补一页项目复盘：目标用户、核心场景、验证方式、用户反馈、下一版优先级；同时补架构图和演示视频。",
+      "补项目复盘页：目标用户、核心场景、AI调用链路、用户反馈、下一版优先级和演示视频。",
     tags: ["React", "TypeScript", "Firebase", "Gemini API", "Netlify", "AI产品MVP"],
     links: [
-      { label: "在线体验", href: "https://tarot-pavilion.netlify.app" },
+      { label: "在线体验", href: links.tarotApp },
       { label: "源码", href: "https://github.com/Roxy163/tarot-app" },
     ],
   },
   {
     id: "ai-products-report",
-    title: "20+款AI产品体验横测报告",
-    label: "Product Analysis",
-    status: "报告已公开在Notion",
-    image: "/images/ai-products-report-placeholder.png",
-    imageFallback: "图片待补充：AI产品横测报告截图",
-    imageAlt: "20款以上AI产品体验横测报告截图占位",
+    title: "20+ AI软件测评文档：任务适配与产品边界分析",
+    label: "Product Research",
+    status: "Notion 报告已公开",
+    image: "/images/ai-report-cover.png",
+    imageFallback: "待补真实截图：报告封面、评分表、典型输出对比",
+    imageAlt: "20款以上AI产品体验测评报告截图",
     why:
-      "AI产品岗位不只要求会用工具，还要能判断不同产品在具体任务中的适配度、优势边界和失败场景。",
+      "AI产品岗位不只看会不会用工具，还看能不能判断不同产品在具体任务里的适配度、优势和边界。",
     did:
-      "体验21款AI产品（通用助手、AI搜索、RAG/知识库、Agent、AI编程），围绕长文总结、项目包装、功能清单、AI边界说明4个真实任务做横向比较，并按7个维度评价。",
+      "体验21款AI产品，围绕4类真实任务做横向比较，并用7个维度记录任务完成度、结构化能力、边界意识和事实可靠性。",
     progress:
-      "已形成公开报告，覆盖21款产品×4类任务×7维度评价，并沉淀出ChatGPT/Claude/DeepSeek/Codex/秘塔/Coze的协同工作流。",
-    proves: ["产品体验分析", "任务适配判断", "工具边界识别", "结构化报告", "评估框架设计"],
+      "已形成公开文档，覆盖通用助手、AI搜索、RAG/知识库、Agent、AI编程与应用搭建工具。",
+    proves: ["产品体验分析", "竞品横测", "评估框架设计", "工具边界识别", "结构化表达"],
     missing: ["典型任务对比截图", "原始Prompt", "失败输出样例", "公开评分表"],
-    next: "补充3-5组典型任务的Prompt、输出样例、失败案例和评分截图，让测试过程更容易被验证。",
-    tags: ["产品分析", "21款AI横测", "任务适配", "7维评价", "工具工作流"],
-    links: [{ label: "查看Notion完整报告", href: links.aiReport }],
+    next:
+      "补3-5组原始Prompt、模型输出、人工判断和评分截图，让测试过程更容易被招聘方复核。",
+    tags: ["21款AI横测", "4类任务", "7维评价", "产品分析", "工具工作流"],
+    links: [{ label: "查看Notion报告", href: links.aiReport }],
   },
   {
     id: "tarot-dify-assistant",
-    title: "塔罗研习阁助手：Dify知识库问答助手",
+    title: "塔罗研习阁助手：Dify 知识库问答助手",
     label: "RAG Case",
     status: "已上线，可公开体验",
     image: "/images/dify-assistant/chat-answer.png",
-    imageFallback: "图片待补充：塔罗研习阁助手截图",
+    imageFallback: "塔罗研习阁助手问答截图",
     imageAlt: "塔罗研习阁助手回答愚人牌逆位问题的截图",
     why:
-      "塔罗学习者的笔记和解牌体悟容易分散，查阅正逆位、复盘方法和边界问题时缺少一个可检索、可追问的学习入口。",
+      "塔罗学习资料容易分散，学习者查正逆位、复盘方法和边界问题时，需要一个可检索、可追问的入口。",
     did:
-      "使用Dify搭建聊天助手，将Notion/Markdown整理出的塔罗研习资料导入知识库，配置OpenAI模型、Embedding、知识库召回和提示词边界，让助手基于资料回答牌义、正逆位、复盘方法和不可确定预测等问题。",
+      "用 Dify 搭建聊天助手，整理塔罗研习资料为知识库，配置模型、Embedding、召回和提示词边界。",
     progress:
-      "已发布公开体验链接，并完成问答测试、边界问题测试和知识库页面截图。当前版本定位为v0.1：先证明能把垂直资料变成可体验的RAG问答应用。",
-    proves: ["Dify应用搭建", "RAG知识库整理", "提示词边界设计", "测试问题验证", "垂直场景产品化"],
+      "已发布公开体验链接，并完成牌义问答、边界问题和知识库页面的截图证据。",
+    proves: ["Dify应用搭建", "RAG知识库整理", "Prompt边界", "问答测试", "垂直场景产品化"],
     missing: ["完整测试题集", "失败样例记录", "召回命中截图", "知识库分段迭代说明"],
     next:
-      "补10条标准测试问题，记录命中、误答、拒答和下一版优化；同时把知识库分段、提示词迭代和回答边界整理成项目复盘。",
+      "补10条标准测试问题，记录命中、误答、拒答和下一版优化；补知识库分段与提示词迭代说明。",
     tags: ["Dify", "RAG", "知识库问答", "Prompt边界", "AI应用搭建"],
     links: [{ label: "在线体验", href: links.difyAssistant }],
     screenshots: [
@@ -312,6 +226,112 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    id: "portfolio-site",
+    title: "Roxy163 个人作品集网站：招聘方阅读路径设计",
+    label: "Portfolio Site",
+    status: "已部署到 Netlify，持续迭代中",
+    image: "/images/portfolio-site/preview-desktop.png",
+    imageFallback: "当前站点就是作品：信息架构、响应式页面、作品证据链",
+    imageAlt: "Roxy163 个人作品集网站桌面端预览",
+    why:
+      "转型求职最容易散乱，我需要一个能把项目、文档、助手和能力证据集中呈现的入口。",
+    did:
+      "用 React + TypeScript 搭建作品集，把四个展示物按招聘方阅读顺序组织，并补充状态、链接、能力标签和下一步计划。",
+    progress:
+      "站点已上线，可作为投递入口；当前版本重点优化信息层级、截图归位和移动端阅读。",
+    proves: ["信息架构", "前端实现", "响应式设计", "作品包装", "持续迭代"],
+    missing: ["更完整的项目复盘链接", "真实产品截图补齐", "简历与站点文案统一"],
+    next:
+      "持续把每个项目的复盘、截图、Prompt、评估表和演示视频接入对应卡片，形成可验证证据包。",
+    tags: ["React", "TypeScript", "Vite", "Netlify", "Portfolio"],
+    links: [
+      { label: "在线访问", href: links.portfolio },
+      { label: "GitHub", href: links.github },
+    ],
+  },
+];
+
+export const capabilityMatrix: CapabilityProof[] = [
+  {
+    title: "清晰定位",
+    target: "AI应用产品 / 产品助理 / 应用搭建",
+    evidence:
+      "首页直接说明目标岗位、四个展示物和一句话定位，避免把自己包装成算法、设计、运营多个方向。",
+    nextProof:
+      "让简历、自我介绍、GitHub README 和面试讲述都围绕同一条主线：AI应用产品助理。",
+  },
+  {
+    title: "AI应用能力",
+    target: "Prompt、模型API、RAG、评估与边界",
+    evidence:
+      "塔罗 App 接入 Gemini API；Dify 助手完成知识库问答；AI横测报告记录工具边界和失败风险。",
+    nextProof:
+      "补原始Prompt、失败样例、召回命中截图和AI输出评估表，让AI能力更容易被验证。",
+  },
+  {
+    title: "产品分析能力",
+    target: "用户场景、竞品分析、MVP验证",
+    evidence:
+      "每个项目都写清为什么做、做了什么、完成到哪里、证明能力和下一步补强。",
+    nextProof:
+      "为塔罗 App 补目标用户、核心场景、用户反馈、需求优先级和下一版迭代方案。",
+  },
+  {
+    title: "工程交付能力",
+    target: "React、TypeScript、Firebase、Netlify、部署安全",
+    evidence:
+      "作品集与塔罗 App 已上线，能把前端、数据同步、模型调用和部署连成可体验产品。",
+    nextProof:
+      "补架构图、部署说明、构建记录和3分钟演示视频，让工程链路一眼可查。",
+  },
+  {
+    title: "作品包装能力",
+    target: "在线Demo、源码、截图、Prompt、评估、复盘",
+    evidence:
+      "当前站点已把在线Demo、源码、Notion报告、Dify助手和求职证据集中展示。",
+    nextProof:
+      "把截图、原始Prompt、失败样例、评估表和用户反馈继续归档到对应项目卡片。",
+  },
+];
+
+export const aiApplicationSkills: AISkill[] = [
+  {
+    title: "Prompt设计与任务拆解",
+    status: "已具备",
+    evidence: "AI横测围绕长文总结、项目包装、功能清单、边界说明等任务做对比。",
+    next: "补3组原始Prompt、模型输出和人工修订记录。",
+  },
+  {
+    title: "模型API与代理层",
+    status: "已具备",
+    evidence: "塔罗 App 通过 Gemini API 完成图像识别和智能解读，并用代理层保护密钥。",
+    next: "把限流、CORS、错误处理和密钥保护写进项目复盘。",
+  },
+  {
+    title: "RAG / 知识库问答",
+    status: "已具备",
+    evidence: "Dify 助手把塔罗学习资料整理成知识库，支持牌义、正逆位、复盘和边界问题回答。",
+    next: "补测试题集、未命中样例和知识库分段迭代记录。",
+  },
+  {
+    title: "Agent / 工作流编排",
+    status: "进行中",
+    evidence: "已完成 Dify 聊天助手形态，理解知识库、提示词、召回设置和发布链接的组合方式。",
+    next: "后续补工作流或Agent节点版本，展示任务流、节点截图和失败兜底逻辑。",
+  },
+  {
+    title: "输出评估与安全边界",
+    status: "已具备",
+    evidence: "横测报告记录幻觉、夸大、错误引用、任务跑偏等风险，坚持项目包装不编造。",
+    next: "把评估维度做成公开表格：事实可靠性、可执行性、边界意识、交互成本。",
+  },
+  {
+    title: "部署与工程协同",
+    status: "已具备",
+    evidence: "作品集和塔罗 App 均已上线，能使用 Codex 协助本地开发、调试、构建和页面迭代。",
+    next: "在仓库中补齐README、环境变量示例、部署步骤和常见问题。",
+  },
 ];
 
 export const portfolioProofChecklist: ProofChecklistItem[] = [
@@ -323,22 +343,22 @@ export const portfolioProofChecklist: ProofChecklistItem[] = [
   {
     item: "源码仓库",
     status: "已具备",
-    detail: "GitHub已放出项目入口，后续要补更清晰的README和项目复盘链接。",
+    detail: "GitHub 已放出项目入口，后续要补更清晰的 README 和项目复盘链接。",
   },
   {
     item: "项目截图",
     status: "进行中",
-    detail: "已补塔罗研习阁助手的问答、边界回答和知识库截图；塔罗App还需要补首页、AI解读、登录同步和移动端截图。",
+    detail: "Dify 助手截图已归位；塔罗 App 和AI横测报告还需要补真实页面、评分表和移动端截图。",
   },
   {
     item: "架构图 / 流程图",
     status: "待补强",
-    detail: "建议补塔罗App技术架构图、AI调用链路图、RAG原型流程图。",
+    detail: "建议补塔罗 App 技术架构图、AI调用链路图、RAG原型流程图。",
   },
   {
     item: "Prompt与输出样例",
     status: "进行中",
-    detail: "Dify助手已形成提示词和输出样例，后续补人工修订记录、失败样例和最终评估表。",
+    detail: "Dify 助手已形成提示词和输出样例，后续补人工修订记录、失败样例和最终评估表。",
   },
   {
     item: "失败案例与评估表",
@@ -365,7 +385,7 @@ export const experiences: Experience[] = [
   },
   {
     source: "AI应用实践",
-    transfer: "使用ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify等工具完成调研、搭建和复盘。",
+    transfer: "使用 ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify 等工具完成调研、搭建和复盘。",
     productValue: "能把AI工具放进具体工作流，推进产品分析、MVP搭建、测试评估和材料沉淀。",
   },
 ];
@@ -410,43 +430,43 @@ export const tools: ToolFlow[] = [
 ];
 
 export const reportSnapshot: ReportSnapshot = {
-  title: "20+款AI产品体验横测：面向AI应用产品助理岗位的工具适配分析",
+  title: "20+款AI软件测评：面向AI应用产品助理岗位的工具适配分析",
   url: links.aiReport,
   summary:
     "围绕长文总结、项目包装、AI产品功能清单、AI边界说明等任务，比较不同AI产品在真实任务里的适配度、边界和分工方式。",
   coverImage: "/images/ai-report-cover.png",
   cover: {
-    title: "20+款AI产品体验横测",
+    title: "20+款AI软件测评",
     subtitle: "面向AI应用产品助理岗位的工具适配分析",
     keywords: ["任务适配", "技术边界", "工具分工", "求职准备"],
     conclusion: "AI产品不是强弱关系，而是任务适配关系",
   },
-  coreConclusion: "AI产品之间不是强弱关系，而是任务适配关系：选工具要看任务，不是看名气",
+  coreConclusion: "AI产品之间不是强弱关系，而是任务适配关系：选工具要看任务，不是看名气。",
   findings: [
-    "通用AI助手（ChatGPT/Claude/Codex）最适合信息整理、方案生成和求职材料打磨",
-    "AI搜索（秘塔/Perplexity）适合查资料和核验事实，适合放在调研与事实校验阶段",
-    "RAG/知识库（Dify/FastGPT/Coze）适合基于固定资料回答问题，关键是资料质量和测试问题设计",
-    "Agent/编程工具（Codex/Replit/Bolt）适合Demo搭建、代码修改和MVP推进",
-    "项目包装任务中要警惕夸大和编造，作品集必须把已完成、进行中、待补强说清楚",
+    "通用AI助手适合信息整理、方案生成和求职材料打磨。",
+    "AI搜索适合查资料和核验事实，应该放在调研与事实校验阶段。",
+    "RAG/知识库适合基于固定资料回答问题，关键是资料质量和测试问题设计。",
+    "AI编程和应用搭建工具适合Demo搭建、代码修改和MVP推进。",
+    "项目包装任务中要警惕夸大和编造，作品集必须把已完成、进行中、待补强说清楚。",
   ],
   screenshots: [
     {
       title: "测试框架与任务设计",
       path: "/images/ai-report-method.png",
       alt: "AI产品横测测试框架截图",
-      fallback: "图片待补充：测试框架与任务设计",
+      fallback: "待补截图：测试框架与任务设计",
     },
     {
       title: "产品对比与评分表",
       path: "/images/ai-report-comparison.png",
       alt: "AI产品对比评分表截图",
-      fallback: "图片待补充：产品对比与评分表",
+      fallback: "待补截图：产品对比与评分表",
     },
     {
       title: "工具协同工作流",
       path: "/images/ai-report-workflow.png",
       alt: "AI工具协同工作流截图",
-      fallback: "图片待补充：工具协同工作流",
+      fallback: "待补截图：工具协同工作流",
     },
   ],
   abilities: [
@@ -460,7 +480,7 @@ export const reportSnapshot: ReportSnapshot = {
     },
     {
       title: "工具协同能力",
-      detail: "沉淀ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify按任务分工的协作方式。",
+      detail: "沉淀 ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify 按任务分工的协作方式。",
     },
     {
       title: "结构化表达",
@@ -476,15 +496,15 @@ export const reportSnapshot: ReportSnapshot = {
 
 export const nextActions: NextAction[] = [
   {
-    title: "把塔罗App补成完整项目案例",
+    title: "把塔罗 App 补成完整项目案例",
     detail: "补目标用户、核心场景、架构图、AI调用链路、截图、演示视频、反馈和下一版优先级。",
   },
   {
-    title: "把Dify知识库助手补成完整RAG案例",
+    title: "把 Dify 知识库助手补成完整 RAG 案例",
     detail: "补资料来源、分段策略、提示词迭代、10条测试问题和命中/失败样例。",
   },
   {
-    title: "整理AI横测证据包",
+    title: "整理 AI 横测证据包",
     detail: "补原始Prompt、输出样例、评分表和失败案例，让报告从“读后感”升级为“测试记录”。",
   },
   {

@@ -1,3 +1,11 @@
-node_modules 
-dist 
-edge-profile-report2 
+node_modules/
+dist/
+edge-profile*/
+github-upload-clean/
+*.log
+*.zip
+*.png
+.DS_Store
+
+# Accidental duplicate clone kept locally; the real portfolio repo is this folder.
+roxy163-portfolio/
