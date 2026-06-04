@@ -26,6 +26,11 @@ export type Project = {
   next: string;
   tags: string[];
   links: ProjectLink[];
+  screenshots?: Array<{
+    title: string;
+    path: string;
+    alt: string;
+  }>;
 };
 
 export type CapabilityProof = {
@@ -99,6 +104,7 @@ export const links = {
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
   portfolio: "https://roxy163.netlify.app",
+  difyAssistant: "https://udify.app/chat/yE8PgcVCb2t5jOIp",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
 };
@@ -110,7 +116,7 @@ export const profile = {
   headline: "我把用户问题拆成AI应用，并做成可运行MVP",
   positioning: "不是纯算法背景，而是产品理解 + AI工具协同 + 前端交付的AI应用实践者",
   summary:
-    "本科土木工程，做过用户运营和玻璃幕墙建模设计。现在用已上线的AI应用、AI产品横测报告和RAG/Agent原型计划，证明自己能把真实场景拆成可演示、可复盘、可迭代的AI产品。",
+    "本科土木工程，做过用户运营和玻璃幕墙建模设计。现在用已上线的AI应用、Dify知识库问答助手和AI产品横测报告，证明自己能把真实场景拆成可演示、可复盘、可迭代的AI产品。",
   proofIntro: "目前最能证明我的三件事",
   contactLine: "欢迎联系我交流AI应用产品、AI应用搭建、产品助理或AI产品运营相关机会。",
 };
@@ -146,9 +152,9 @@ export const capabilityMatrix: CapabilityProof[] = [
     title: "AI应用能力",
     target: "Prompt、模型API、RAG、Agent、评估与边界",
     evidence:
-      "塔罗App已接入Gemini API，包含AI识图和解读；API通过Netlify Function代理，横测报告覆盖RAG/Agent/AI编程工具。",
+      "塔罗App已接入Gemini API，包含AI识图和解读；塔罗研习阁助手已用Dify搭建知识库问答，并公开可体验。",
     nextProof:
-      "补一个垂直行业RAG问答Demo，并放出测试问题、失败案例和输出评估表。",
+      "继续补充测试问题、失败案例、召回截图和提示词迭代记录，让RAG案例更容易被招聘方验证。",
   },
   {
     title: "产品能力",
@@ -191,15 +197,15 @@ export const aiApplicationSkills: AISkill[] = [
   },
   {
     title: "RAG / 知识库问答",
-    status: "进行中",
-    evidence: "横测报告已比较Dify、FastGPT、Coze等知识库产品，准备结合幕墙/AI产品资料做垂直问答。",
-    next: "先做一个小知识库，准备10条标准测试问题和命中/未命中样例。",
+    status: "已具备",
+    evidence: "已用Dify搭建“塔罗研习阁助手”，将塔罗学习笔记整理为知识库，支持牌义查阅、正逆位理解、复盘方法和边界问题回答。",
+    next: "继续补充测试题集、未命中样例和知识库分段迭代记录。",
   },
   {
     title: "Agent / 工作流编排",
     status: "进行中",
-    evidence: "已梳理Coze原型方向，理解Bot、意图、流程节点和知识库的组合方式。",
-    next: "补一个能演示的Coze Bot，展示任务流、节点截图和失败兜底逻辑。",
+    evidence: "已完成Dify聊天助手形态，理解知识库、提示词、召回设置和发布链接的组合方式。",
+    next: "后续再补工作流或Agent节点版本，展示任务流、节点截图和失败兜底逻辑。",
   },
   {
     title: "输出评估与安全边界",
@@ -269,25 +275,42 @@ export const projects: Project[] = [
     links: [{ label: "查看Notion完整报告", href: links.aiReport }],
   },
   {
-    id: "coze-rag-agent",
-    title: "垂直行业RAG / Coze Agent原型",
-    label: "In Progress",
-    status: "进行中：优先做小场景可演示Demo",
-    image: "/images/coze-agent-placeholder.png",
-    imageFallback: "图片待补充：RAG/Agent原型截图",
-    imageAlt: "Coze RAG Agent作品截图占位",
+    id: "tarot-dify-assistant",
+    title: "塔罗研习阁助手：Dify知识库问答助手",
+    label: "RAG Case",
+    status: "已上线，可公开体验",
+    image: "/images/dify-assistant/chat-answer.png",
+    imageFallback: "图片待补充：塔罗研习阁助手截图",
+    imageAlt: "塔罗研习阁助手回答愚人牌逆位问题的截图",
     why:
-      "补齐知识库问答、Agent和工作流设计类作品，让AI应用搭建能力有更直接的演示入口，也把过往幕墙建模经验转成差异化场景。",
+      "塔罗学习者的笔记和解牌体悟容易分散，查阅正逆位、复盘方法和边界问题时缺少一个可检索、可追问的学习入口。",
     did:
-      "已确定优先方向：从小知识库问答开始，围绕资料整理、问题命中、无法回答时的兜底表达、测试问题集和输出评估表搭建。",
+      "使用Dify搭建聊天助手，将Notion/Markdown整理出的塔罗研习资料导入知识库，配置OpenAI模型、Embedding、知识库召回和提示词边界，让助手基于资料回答牌义、正逆位、复盘方法和不可确定预测等问题。",
     progress:
-      "处于原型规划和资料准备阶段，暂不包装成已完成项目。作品集会持续展示需求文档、流程图、测试问题和Demo链接。",
-    proves: ["RAG意识", "Agent方向探索", "垂直场景选择", "知识库问答设计", "工作流拆解"],
-    missing: ["需求文档", "知识库材料", "流程图/节点截图", "Demo链接", "测试问题集"],
+      "已发布公开体验链接，并完成问答测试、边界问题测试和知识库页面截图。当前版本定位为v0.1：先证明能把垂直资料变成可体验的RAG问答应用。",
+    proves: ["Dify应用搭建", "RAG知识库整理", "提示词边界设计", "测试问题验证", "垂直场景产品化"],
+    missing: ["完整测试题集", "失败样例记录", "召回命中截图", "知识库分段迭代说明"],
     next:
-      "先完成一个可演示Bot：上传小规模资料，设计10条测试问题，记录命中、误答、拒答和下一版优化。",
-    tags: ["Coze", "RAG", "Agent", "知识库问答", "垂直行业AI"],
-    links: [],
+      "补10条标准测试问题，记录命中、误答、拒答和下一版优化；同时把知识库分段、提示词迭代和回答边界整理成项目复盘。",
+    tags: ["Dify", "RAG", "知识库问答", "Prompt边界", "AI应用搭建"],
+    links: [{ label: "在线体验", href: links.difyAssistant }],
+    screenshots: [
+      {
+        title: "牌义问答",
+        path: "/images/dify-assistant/chat-answer.png",
+        alt: "塔罗研习阁助手回答愚人牌逆位含义",
+      },
+      {
+        title: "边界回答",
+        path: "/images/dify-assistant/boundary-answer.png",
+        alt: "塔罗研习阁助手回答塔罗不能确定预测未来",
+      },
+      {
+        title: "知识库配置",
+        path: "/images/dify-assistant/knowledge-card.png",
+        alt: "Dify中的塔罗研习知识库卡片",
+      },
+    ],
   },
 ];
 
@@ -295,7 +318,7 @@ export const portfolioProofChecklist: ProofChecklistItem[] = [
   {
     item: "在线Demo",
     status: "已具备",
-    detail: "塔罗研习阁和个人作品集均已部署到公网，可直接发给招聘方体验。",
+    detail: "塔罗研习阁、塔罗研习阁助手和个人作品集均已部署到公网，可直接发给招聘方体验。",
   },
   {
     item: "源码仓库",
@@ -304,8 +327,8 @@ export const portfolioProofChecklist: ProofChecklistItem[] = [
   },
   {
     item: "项目截图",
-    status: "待补强",
-    detail: "作品集已预留截图位，需要补首页、AI解读、登录同步、移动端等关键截图。",
+    status: "进行中",
+    detail: "已补塔罗研习阁助手的问答、边界回答和知识库截图；塔罗App还需要补首页、AI解读、登录同步和移动端截图。",
   },
   {
     item: "架构图 / 流程图",
@@ -314,8 +337,8 @@ export const portfolioProofChecklist: ProofChecklistItem[] = [
   },
   {
     item: "Prompt与输出样例",
-    status: "待补强",
-    detail: "补原始Prompt、模型输出、人工修订和最终页面效果，证明不是只会“问AI”。",
+    status: "进行中",
+    detail: "Dify助手已形成提示词和输出样例，后续补人工修订记录、失败样例和最终评估表。",
   },
   {
     item: "失败案例与评估表",
@@ -342,7 +365,7 @@ export const experiences: Experience[] = [
   },
   {
     source: "AI应用实践",
-    transfer: "使用ChatGPT、Claude、DeepSeek、Codex、秘塔、Coze等工具完成调研、搭建和复盘。",
+    transfer: "使用ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify等工具完成调研、搭建和复盘。",
     productValue: "能把AI工具放进具体工作流，推进产品分析、MVP搭建、测试评估和材料沉淀。",
   },
 ];
@@ -379,10 +402,10 @@ export const tools: ToolFlow[] = [
     output: "搜索线索、资料摘要、引用入口和事实核验结果。",
   },
   {
-    tool: "Coze",
-    role: "原型搭建",
-    useCase: "Bot原型、知识库问答、工作流编排和Agent方向探索。",
-    output: "可演示Bot、流程节点、知识库应用雏形和测试问题集。",
+    tool: "Dify",
+    role: "知识库问答搭建",
+    useCase: "垂直资料整理、知识库导入、提示词边界、召回测试和公开WebApp发布。",
+    output: "可体验的塔罗研习阁助手、知识库截图、问答样例和边界问题回答。",
   },
 ];
 
@@ -437,7 +460,7 @@ export const reportSnapshot: ReportSnapshot = {
     },
     {
       title: "工具协同能力",
-      detail: "沉淀ChatGPT、Claude、DeepSeek、Codex、秘塔、Coze按任务分工的协作方式。",
+      detail: "沉淀ChatGPT、Claude、DeepSeek、Codex、秘塔、Dify按任务分工的协作方式。",
     },
     {
       title: "结构化表达",
@@ -457,8 +480,8 @@ export const nextActions: NextAction[] = [
     detail: "补目标用户、核心场景、架构图、AI调用链路、截图、演示视频、反馈和下一版优先级。",
   },
   {
-    title: "完成一个垂直行业RAG / Coze Demo",
-    detail: "选择小知识库场景，准备资料、意图、流程节点、10条测试问题和命中/失败样例。",
+    title: "把Dify知识库助手补成完整RAG案例",
+    detail: "补资料来源、分段策略、提示词迭代、10条测试问题和命中/失败样例。",
   },
   {
     title: "整理AI横测证据包",

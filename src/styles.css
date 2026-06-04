@@ -640,6 +640,34 @@ h4 {
   margin: 0;
 }
 
+.case-screenshot-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.case-screenshot-strip figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.case-screenshot-strip img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f6f8fa;
+  object-fit: cover;
+}
+
+.case-screenshot-strip figcaption {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .report-snapshot {
   margin-top: 22px;
   border: 1px solid var(--line);
@@ -1402,5 +1430,9 @@ h4 {
   .project-visual img,
   .featured-case .image-fallback {
     min-height: 260px;
+  }
+
+  .case-screenshot-strip {
+    grid-template-columns: 1fr;
   }
 }

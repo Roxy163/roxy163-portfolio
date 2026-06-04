@@ -84,6 +84,21 @@ function ProjectLinks({ project }: { project: Project }) {
   );
 }
 
+function ProjectScreenshots({ project }: { project: Project }) {
+  if (!project.screenshots?.length) return null;
+
+  return (
+    <div className="case-screenshot-strip" aria-label={`${project.title}证据截图`}>
+      {project.screenshots.map((shot) => (
+        <figure key={shot.path}>
+          <img src={shot.path} alt={shot.alt} loading="lazy" />
+          <figcaption>{shot.title}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function ReportImage({
   path,
   alt,
@@ -202,6 +217,7 @@ function CompactCase({ project }: { project: Project }) {
             <dd>{project.missing.length > 0 ? project.missing.join(" / ") : "暂无"}</dd>
           </div>
         </dl>
+        <ProjectScreenshots project={project} />
         <ProjectLinks project={project} />
       </div>
     </article>
