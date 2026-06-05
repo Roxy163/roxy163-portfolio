@@ -118,7 +118,7 @@ export const profile = {
   positioning: "用产品理解、AI工具协同和前端交付，把想法推进成可体验的AI应用。",
   summary:
     "这个站点只展示四个招聘方能直接检查的东西：塔罗研习阁 App、20+ AI软件测评文档、塔罗知识库问答助手，以及这个作品集网站本身。每个作品都写清楚我做了什么、现在完成到哪里、它能证明什么能力。",
-  proofIntro: "四个可验证展示物",
+  proofIntro: "四个展示物",
   contactLine: "欢迎联系我交流AI应用产品、AI应用搭建、产品助理或AI产品运营相关机会。",
 };
 
@@ -148,9 +148,9 @@ export const projects: Project[] = [
     label: "AI App MVP",
     status: "已部署到 Netlify，可在线体验",
     featured: true,
-    image: "/images/tarot-app/home.png",
-    imageFallback: "待补真实截图：首页、AI解读、登录同步、移动端",
-    imageAlt: "塔罗研习阁 App 首页与AI解读功能截图",
+    image: "",
+    imageFallback: "塔罗研习阁：AI塔罗记录与自我探索应用",
+    imageAlt: "塔罗研习阁作品概要",
     why:
       "情绪记录和自我复盘的启动成本较高，我把塔罗牌作为轻量入口，让用户更愿意表达问题并沉淀记录。",
     did:
@@ -161,10 +161,41 @@ export const projects: Project[] = [
     missing: ["产品架构图", "3分钟演示视频", "用户反馈→需求清单", "AI输出评估样例"],
     next:
       "补项目复盘页：目标用户、核心场景、AI调用链路、用户反馈、下一版优先级和演示视频。",
-    tags: ["React", "TypeScript", "Firebase", "Gemini API", "Netlify", "AI产品MVP"],
+    tags: ["用户记录", "塔罗研习", "AI辅助解读", "云端同步"],
     links: [
       { label: "在线体验", href: links.tarotApp },
-      { label: "源码", href: "https://github.com/Roxy163/tarot-app" },
+    ],
+    screenshots: [
+      {
+        title: "研习台首页",
+        path: "/images/tarot-app/home-1.png",
+        alt: "塔罗研习阁首页，展示今日手记入口和今日运势",
+      },
+      {
+        title: "牌意小考与数据复盘",
+        path: "/images/tarot-app/home-2.png",
+        alt: "研习台功能区，展示快速占卜、牌意小考和数据统计",
+      },
+      {
+        title: "抽牌手记",
+        path: "/images/tarot-app/reading-1.png",
+        alt: "抽牌手记页面，支持问题输入、日期选择和牌阵选择",
+      },
+      {
+        title: "手记编辑",
+        path: "/images/tarot-app/reading-2.png",
+        alt: "手记编辑页面，支持主牌选择、补充解读视角和保存到本地",
+      },
+      {
+        title: "典籍记录",
+        path: "/images/tarot-app/library.png",
+        alt: "典籍页面，展示历史占卜记录和AI综合解读",
+      },
+      {
+        title: "执印入阁",
+        path: "/images/tarot-app/login.png",
+        alt: "登录页面，支持邮箱密码登录和访客模式",
+      },
     ],
   },
   {
@@ -172,9 +203,9 @@ export const projects: Project[] = [
     title: "20+ AI软件测评文档：任务适配与产品边界分析",
     label: "Product Research",
     status: "Notion 报告已公开",
-    image: "/images/ai-report-cover.png",
-    imageFallback: "待补真实截图：报告封面、评分表、典型输出对比",
-    imageAlt: "20款以上AI产品体验测评报告截图",
+    image: "",
+    imageFallback: "21款AI产品 × 4类任务 × 7维评价",
+    imageAlt: "AI产品测评报告概要",
     why:
       "AI产品岗位不只看会不会用工具，还看能不能判断不同产品在具体任务里的适配度、优势和边界。",
     did:
@@ -193,9 +224,9 @@ export const projects: Project[] = [
     title: "塔罗研习阁助手：Dify 知识库问答助手",
     label: "RAG Case",
     status: "已上线，可公开体验",
-    image: "/images/dify-assistant/chat-answer.png",
-    imageFallback: "塔罗研习阁助手问答截图",
-    imageAlt: "塔罗研习阁助手回答愚人牌逆位问题的截图",
+    image: "",
+    imageFallback: "塔罗知识库 · 智能问答助手",
+    imageAlt: "塔罗研习阁助手",
     why:
       "塔罗学习资料容易分散，学习者查正逆位、复盘方法和边界问题时，需要一个可检索、可追问的入口。",
     did:
@@ -206,34 +237,17 @@ export const projects: Project[] = [
     missing: ["完整测试题集", "失败样例记录", "召回命中截图", "知识库分段迭代说明"],
     next:
       "补10条标准测试问题，记录命中、误答、拒答和下一版优化；补知识库分段与提示词迭代说明。",
-    tags: ["Dify", "RAG", "知识库问答", "Prompt边界", "AI应用搭建"],
+    tags: ["牌义问答", "知识库检索", "边界意识", "学习辅助"],
     links: [{ label: "在线体验", href: links.difyAssistant }],
-    screenshots: [
-      {
-        title: "牌义问答",
-        path: "/images/dify-assistant/chat-answer.png",
-        alt: "塔罗研习阁助手回答愚人牌逆位含义",
-      },
-      {
-        title: "边界回答",
-        path: "/images/dify-assistant/boundary-answer.png",
-        alt: "塔罗研习阁助手回答塔罗不能确定预测未来",
-      },
-      {
-        title: "知识库配置",
-        path: "/images/dify-assistant/knowledge-card.png",
-        alt: "Dify中的塔罗研习知识库卡片",
-      },
-    ],
   },
   {
     id: "portfolio-site",
     title: "Roxy163 个人作品集网站：招聘方阅读路径设计",
     label: "Portfolio Site",
     status: "已部署到 Netlify，持续迭代中",
-    image: "/images/portfolio-site/preview-desktop.png",
-    imageFallback: "当前站点就是作品：信息架构、响应式页面、作品证据链",
-    imageAlt: "Roxy163 个人作品集网站桌面端预览",
+    image: "",
+    imageFallback: "作品集展示 · 能力证据链",
+    imageAlt: "个人作品集网站",
     why:
       "转型求职最容易散乱，我需要一个能把项目、文档、助手和能力证据集中呈现的入口。",
     did:
@@ -244,7 +258,7 @@ export const projects: Project[] = [
     missing: ["更完整的项目复盘链接", "真实产品截图补齐", "简历与站点文案统一"],
     next:
       "持续把每个项目的复盘、截图、Prompt、评估表和演示视频接入对应卡片，形成可验证证据包。",
-    tags: ["React", "TypeScript", "Vite", "Netlify", "Portfolio"],
+    tags: ["作品集设计", "阅读路径", "响应式", "证据呈现"],
     links: [
       { label: "在线访问", href: links.portfolio },
       { label: "GitHub", href: links.github },
