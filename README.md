@@ -1,6 +1,6 @@
 # Roxy163 个人 AI 产品作品集
 
-本项目是一个静态部署友好的 Vite + React + TypeScript 个人作品集网站。
+本项目是一个静态部署友好的个人作品集网站，用来集中展示 AI 应用实践、测评记录和作品过程。页面和代码由 AI 辅助迭代，内容口径以真实作品和真实过程为准。
 
 ## 常用命令
 
@@ -16,7 +16,7 @@ npm.cmd run serve
 http://127.0.0.1:4173/
 ```
 
-注意：`127.0.0.1` 只代表你自己的电脑，别人打不开。要发给招聘方或朋友，请先部署到公网。具体步骤见 `DEPLOY.md`。
+注意：`127.0.0.1` 只代表你自己的电脑，别人打不开。如果想分享给别人，请先部署到公网。具体步骤见 `DEPLOY.md`。
 
 如果只是同一个 Wi-Fi 下临时预览，可以使用：
 
@@ -28,22 +28,22 @@ npm.cmd run dev:lan
 
 - 改姓名、定位、邮箱、微信、项目文案、Demo/GitHub 链接：`src/data/portfolio.ts`
 - 替换项目图片：`public/images/`
-- 替换简历 PDF：`public/resume.pdf`
+- 替换简历文件：`public/Roxy_AI产品助理.docx`
 - 改页面结构：`src/App.tsx`
 - 改视觉样式：`src/styles.css`
 
-## 预留图片路径
+## 当前图片目录
 
-项目里已经引用这些路径。你后续把同名图片放进去即可：
+项目封面图放在：
 
 ```text
-public/images/tarot-app-placeholder.png
-public/images/ai-products-report-placeholder.png
-public/images/coze-agent-placeholder.png
-public/images/ai-report-cover.png
-public/images/ai-report-method.png
-public/images/ai-report-comparison.png
-public/images/ai-report-workflow.png
+public/images/covers/
 ```
 
-如果图片不存在，页面会显示“图片待补充”的占位区，不会报错。
+塔罗 App 页面截图放在：
+
+```text
+public/images/tarot-app/
+```
+
+如果图片加载失败，页面会显示对应项目的文字占位区，不会报错。

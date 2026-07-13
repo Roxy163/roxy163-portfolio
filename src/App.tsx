@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import {
   ArrowUp,
   ArrowUpRight,
-  BadgeCheck,
   BookOpenCheck,
   BriefcaseBusiness,
+  ChevronLeft,
+  ChevronRight,
   Download,
   FileText,
   Github,
@@ -16,28 +17,23 @@ import {
   PanelTop,
   Sparkles,
   UserRound,
+  X,
+  ZoomIn,
+  PlayCircle,
 } from "lucide-react";
 import {
-  aiApplicationSkills,
   capabilityMatrix,
   contactItems,
-  experiences,
   heroProofs,
   links,
-  nextActions,
-  portfolioProofChecklist,
   profile,
   projects,
-  reportSnapshot,
-  tools,
   type Project,
 } from "./data/portfolio";
 
 const navItems = [
   { label: "作品", href: "#projects" },
-  { label: "能力证据", href: "#proof" },
-  { label: "经历迁移", href: "#experience" },
-  { label: "30天计划", href: "#next" },
+  { label: "能力", href: "#proof" },
   { label: "联系", href: "#contact" },
 ];
 
@@ -45,7 +41,7 @@ const contactIconMap = {
   邮箱: Mail,
   微信: MessageCircle,
   "GitHub / 作品链接": Github,
-  简历PDF: Download,
+  简历Word: Download,
 };
 
 const projectIconMap = {
@@ -55,14 +51,43 @@ const projectIconMap = {
   "portfolio-site": LayoutDashboard,
 };
 
+const heroStats = [
+  { value: "4", label: "个可打开作品", detail: "App / 报告 / 助手 / 作品集" },
+  { value: "21", label: "款AI产品实测", detail: "从长文解读任务切入" },
+  { value: "2", label: "个上线AI应用", detail: "塔罗 App 与 Dify 问答助手" },
+];
+
+type ProjectScreenshot = NonNullable<Project["screenshots"]>[number];
+type LightboxState = {
+  images: ProjectScreenshot[];
+  index: number;
+};
+
 function ProjectVisual({ project }: { project: Project }) {
   const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const Icon = projectIconMap[project.id as keyof typeof projectIconMap] ?? PanelTop;
 
   return (
     <div className="project-visual" data-project={project.id}>
-      {!failed ? (
-        <img src={project.image} alt={project.imageAlt} onError={() => setFailed(true)} loading="lazy" />
+      {!failed && project.image ? (
+        <>
+          {!loaded && (
+            <div className="visual-loading">
+              <Icon size={28} aria-hidden="true" />
+              <span>加载中...</span>
+            </div>
+          )}
+          <img
+            src={project.image}
+            alt={project.imageAlt}
+            onError={() => setFailed(true)}
+            onLoad={() => setLoaded(true)}
+            loading="lazy"
+            width={800}
+            height={420}
+          />
+        </>
       ) : (
         <div className="visual-fallback">
           <Icon size={28} aria-hidden="true" />
@@ -97,16 +122,187 @@ function ProjectLinks({ project }: { project: Project }) {
   );
 }
 
-function ProjectScreenshots({ project }: { project: Project }) {
+function ExpandableText({
+  children,
+  className,
+  lines = 2,
+}: {
+  children: string;
+  className?: string;
+  lines?: number;
+}) {
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [canExpand, setCanExpand] = useState(false);
+
+  useEffect(() => {
+    const element = textRef.current;
+    if (!element) return;
+
+    const checkOverflow = () => {
+      if (expanded) {
+        setCanExpand(true);
+        return;
+      }
+
+      setCanExpand(element.scrollHeight > element.clientHeight + 1);
+    };
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [children, expanded, lines]);
+
+  return (
+    <div className="expandable-copy">
+      <p
+        className={`${className ?? ""} expandable-text${expanded ? " expanded" : ""}`.trim()}
+        ref={textRef}
+        style={{ "--line-count": lines } as CSSProperties}
+      >
+        {children}
+      </p>
+      {canExpand && (
+        <button
+          className="expand-toggle"
+          type="button"
+          onClick={() => setExpanded((current) => !current)}
+        >
+          {expanded ? "收起" : "展开"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function ImageLightbox({
+  state,
+  onStep,
+  onClose,
+}: {
+  state: LightboxState | null;
+  onStep: (direction: -1 | 1) => void;
+  onClose: () => void;
+}) {
+  const touchStartX = useRef<number | null>(null);
+  const image = state?.images[state.index] ?? null;
+  const canStep = Boolean(state && state.images.length > 1);
+
+  useEffect(() => {
+    if (!state) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") onStep(-1);
+      if (event.key === "ArrowRight") onStep(1);
+    };
+
+    document.body.classList.add("has-lightbox");
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.classList.remove("has-lightbox");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [state, onClose, onStep]);
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) return;
+
+    const deltaX = event.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+
+    if (Math.abs(deltaX) < 42) return;
+    onStep(deltaX > 0 ? -1 : 1);
+  };
+
+  if (!state || !image) return null;
+
+  return (
+    <div
+      className="image-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.title}
+      onTouchStart={(event) => {
+        touchStartX.current = event.touches[0].clientX;
+      }}
+      onTouchEnd={handleTouchEnd}
+    >
+      <button className="lightbox-backdrop" type="button" onClick={onClose} aria-label="关闭预览" />
+      <figure className="lightbox-content">
+        <button className="lightbox-close" type="button" onClick={onClose} aria-label="关闭预览">
+          <X size={18} aria-hidden="true" />
+        </button>
+        {canStep && (
+          <>
+            <button
+              className="lightbox-nav lightbox-prev"
+              type="button"
+              onClick={() => onStep(-1)}
+              aria-label="查看上一张截图"
+            >
+              <ChevronLeft size={24} aria-hidden="true" />
+            </button>
+            <button
+              className="lightbox-nav lightbox-next"
+              type="button"
+              onClick={() => onStep(1)}
+              aria-label="查看下一张截图"
+            >
+              <ChevronRight size={24} aria-hidden="true" />
+            </button>
+          </>
+        )}
+        <img src={image.path} alt={image.alt} />
+        <figcaption>
+          {image.title}
+          {canStep && (
+            <span>
+              {state.index + 1} / {state.images.length}
+            </span>
+          )}
+        </figcaption>
+      </figure>
+    </div>
+  );
+}
+
+function ProjectScreenshots({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: (images: ProjectScreenshot[], index: number) => void;
+}) {
   if (!project.screenshots?.length) return null;
 
   return (
-    <div className="case-screenshots" aria-label={`${project.title}截图证据`}>
-      <span>截图证据</span>
+    <div
+      className="case-screenshots"
+      data-project={project.id}
+      aria-label={`${project.title}展示图`}
+    >
+      <span>展示图</span>
       <div>
-        {project.screenshots.map((shot) => (
+        {project.screenshots.map((shot, index) => (
           <figure key={shot.path}>
-            <img src={shot.path} alt={shot.alt} loading="lazy" />
+            <button
+              className="screenshot-button"
+              type="button"
+              onClick={() => onOpen(project.screenshots ?? [], index)}
+              aria-label={`放大查看：${shot.title}`}
+            >
+              <img
+                src={shot.path}
+                alt={shot.alt}
+                loading="lazy"
+                width={450}
+                height={800}
+              />
+              <span aria-hidden="true">
+                <ZoomIn size={15} />
+              </span>
+            </button>
             <figcaption>{shot.title}</figcaption>
           </figure>
         ))}
@@ -115,8 +311,78 @@ function ProjectScreenshots({ project }: { project: Project }) {
   );
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectSummary({ points }: { points?: string[] }) {
+  if (!points?.length) return null;
+
+  return (
+    <div className="project-summary">
+      <span>站内摘要</span>
+      <ul>
+        {points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function ProjectVideo({ project }: { project: Project }) {
+  if (!project.video) return null;
+
+  return (
+    <div className="project-video">
+      <div className="project-video-copy">
+        <span>演示视频</span>
+        <strong>{project.video.title}</strong>
+        <p>{project.video.description}</p>
+        <a className="text-link" href={project.video.href} target="_blank" rel="noreferrer">
+          去B站观看
+          <ArrowUpRight size={15} aria-hidden="true" />
+        </a>
+      </div>
+      <a
+        className="video-cover"
+        href={project.video.href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`在B站观看：${project.video.title}`}
+      >
+        <img src={project.video.cover} alt={project.video.coverAlt} loading="lazy" />
+        <span>
+          <PlayCircle size={34} aria-hidden="true" />
+          B站观看
+        </span>
+      </a>
+    </div>
+  );
+}
+
+function ProjectProcess({ steps }: { steps: string[] }) {
+  if (steps.length === 0) return null;
+
+  return (
+    <details className="project-process">
+      <summary>真实过程</summary>
+      <ol>
+        {steps.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ol>
+    </details>
+  );
+}
+
+function ProjectCard({
+  project,
+  index,
+  onOpenScreenshot,
+}: {
+  project: Project;
+  index: number;
+  onOpenScreenshot: (images: ProjectScreenshot[], index: number) => void;
+}) {
   const Icon = projectIconMap[project.id as keyof typeof projectIconMap] ?? PanelTop;
+  const hasSummary = Boolean(project.summaryPoints?.length);
 
   return (
     <article className="project-card">
@@ -131,79 +397,37 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <Icon size={21} aria-hidden="true" />
           {project.title}
         </h3>
-        <p className="project-why">{project.why}</p>
+        <ExpandableText className="project-why" lines={2}>
+          {project.why}
+        </ExpandableText>
+        <ProjectLinks project={project} />
 
-        <div className="project-evidence">
-          <div>
-            <span>我做了什么</span>
-            <p>{project.did}</p>
-          </div>
-          <div>
-            <span>现在完成到哪里</span>
-            <p>{project.progress}</p>
-          </div>
-        </div>
+        <ProjectSummary points={project.summaryPoints} />
 
-        <div className="tag-row" aria-label={`${project.title}能力标签`}>
-          {project.proves.map((item) => (
+        {!hasSummary && (
+          <div className="project-evidence">
+            <div>
+              <span>核心产出</span>
+              <ExpandableText lines={2}>{project.did}</ExpandableText>
+            </div>
+            <div>
+              <span>当前状态</span>
+              <ExpandableText lines={2}>{project.progress}</ExpandableText>
+            </div>
+          </div>
+        )}
+
+        <div className="tag-row" aria-label={`${project.title}相关能力`}>
+          {project.proves.slice(0, 4).map((item) => (
             <span key={item}>{item}</span>
           ))}
         </div>
 
-        <div className="project-next">
-          <span>下一步补强</span>
-          <p>{project.next}</p>
-        </div>
+        <ProjectProcess steps={project.process} />
 
-        <ProjectScreenshots project={project} />
-        <ProjectLinks project={project} />
-      </div>
-    </article>
-  );
-}
+        <ProjectVideo project={project} />
 
-function ReportBrief() {
-  return (
-    <article className="report-brief" aria-labelledby="report-brief-title">
-      <div className="report-copy">
-        <p className="eyebrow">Research Method</p>
-        <h3 id="report-brief-title">{reportSnapshot.title}</h3>
-        <p>{reportSnapshot.summary}</p>
-        <div className="report-conclusion">
-          <span>核心结论</span>
-          <strong>{reportSnapshot.coreConclusion}</strong>
-        </div>
-        <a className="button secondary" href={reportSnapshot.url} target="_blank" rel="noreferrer">
-          查看Notion全文
-          <ArrowUpRight size={18} aria-hidden="true" />
-        </a>
-      </div>
-
-      <div className="report-framework">
-        <div>
-          <strong>4类测试任务</strong>
-          <div className="mini-tag-row">
-            {reportSnapshot.testFramework.tasks.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-        </div>
-        <div>
-          <strong>产品范围</strong>
-          <div className="mini-tag-row">
-            {reportSnapshot.testFramework.categories.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-        </div>
-        <div>
-          <strong>7个评价维度</strong>
-          <div className="mini-tag-row">
-            {reportSnapshot.testFramework.dimensions.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-        </div>
+        <ProjectScreenshots project={project} onOpen={onOpenScreenshot} />
       </div>
     </article>
   );
@@ -213,76 +437,23 @@ function ProofSection() {
   return (
     <section className="section proof-section" id="proof" aria-labelledby="proof-title">
       <div className="section-heading">
-        <p className="eyebrow">Role Fit</p>
-        <h2 id="proof-title">招聘方关心的能力，分别对应哪些证据</h2>
-        <p>这里不堆“我会什么”，而是把能力放回可检查的作品和下一步补强动作里。</p>
+        <p className="eyebrow">Practice</p>
+        <h2 id="proof-title">AI应用产品的工作方式</h2>
+        <p>围绕真实任务拆需求、搭初版、做测试，再把问题、边界和下一步记录清楚。</p>
       </div>
 
       <div className="capability-list">
-        {capabilityMatrix.map((item, index) => (
+        {capabilityMatrix.slice(0, 4).map((item, index) => (
           <article className="capability-item" key={item.title}>
             <span>{String(index + 1).padStart(2, "0")}</span>
             <div>
               <h3>{item.title}</h3>
               <strong>{item.target}</strong>
             </div>
-            <p>{item.evidence}</p>
-            <p>{item.nextProof}</p>
+            <ExpandableText lines={3}>{item.evidence}</ExpandableText>
           </article>
         ))}
       </div>
-
-      <div className="proof-grid">
-        <section aria-label="AI应用能力栈">
-          <h3>AI应用能力栈</h3>
-          <div className="ai-skill-grid">
-            {aiApplicationSkills.map((skill) => (
-              <article className="ai-skill-card" key={skill.title}>
-                <div>
-                  <strong>{skill.title}</strong>
-                  <span>{skill.status}</span>
-                </div>
-                <p>{skill.evidence}</p>
-                <small>{skill.next}</small>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section aria-label="求职证据包">
-          <h3>求职证据包状态</h3>
-          <div className="proof-checklist">
-            {portfolioProofChecklist.map((item) => (
-              <article className="proof-item" data-status={item.status} key={item.item}>
-                <div>
-                  <strong>{item.item}</strong>
-                  <span>{item.status}</span>
-                </div>
-                <p>{item.detail}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <section className="workflow-panel" aria-labelledby="workflow-title">
-        <div>
-          <p className="eyebrow">AI Workflow</p>
-          <h3 id="workflow-title">工具流按任务分工，而不是堆工具名</h3>
-        </div>
-        <div className="tool-board">
-          {tools.map((tool) => (
-            <article className="tool-row" key={tool.tool}>
-              <div>
-                <span>{tool.role}</span>
-                <h4>{tool.tool}</h4>
-              </div>
-              <p>{tool.useCase}</p>
-              <strong>{tool.output}</strong>
-            </article>
-          ))}
-        </div>
-      </section>
     </section>
   );
 }
@@ -290,10 +461,11 @@ function ProofSection() {
 export function App() {
   const [activeSection, setActiveSection] = useState("home");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [lightboxState, setLightboxState] = useState<LightboxState | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "projects", "proof", "experience", "next", "contact"];
+      const sections = ["home", "projects", "proof", "contact"];
       const scrollPosition = window.scrollY + 180;
 
       for (const section of sections) {
@@ -318,6 +490,19 @@ export function App() {
   const scrollToTop = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const openLightbox = (images: ProjectScreenshot[], index: number) => {
+    if (images.length === 0) return;
+    setLightboxState({ images, index });
+  };
+
+  const stepLightbox = (direction: -1 | 1) => {
+    setLightboxState((current) => {
+      if (!current) return current;
+      const nextIndex = (current.index + direction + current.images.length) % current.images.length;
+      return { ...current, index: nextIndex };
+    });
   };
 
   return (
@@ -351,26 +536,30 @@ export function App() {
               {profile.location}
             </p>
             <h1>{profile.headline}</h1>
-            <p className="hero-summary">{profile.summary}</p>
+            <p className="hero-summary">{profile.positioning}</p>
 
-            <div className="role-strip" aria-label="目标岗位">
-              <span>目标岗位</span>
+            <div className="hero-focus" aria-label="现在关注的方向">
               <div>
-                {profile.targetRoles.map((role) => (
-                  <strong key={role}>{role}</strong>
-                ))}
+                <span>现在关注的方向</span>
+                <strong>{profile.targetRoles.slice(0, 3).join(" / ")}</strong>
               </div>
+              <p>{profile.summary}</p>
             </div>
 
-            <div className="positioning-note">
-              <span>一句话定位</span>
-              <p>{profile.positioning}</p>
+            <div className="hero-stats" aria-label="近期整理">
+              {heroStats.map((stat) => (
+                <div key={stat.label}>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                  <small>{stat.detail}</small>
+                </div>
+              ))}
             </div>
 
             <div className="hero-actions">
               <a className="button primary" href="#projects">
                 <BriefcaseBusiness size={18} aria-hidden="true" />
-                查看四个作品
+                看代表作品
               </a>
               <a className="button secondary" href="#contact">
                 <Mail size={18} aria-hidden="true" />
@@ -381,16 +570,16 @@ export function App() {
 
           <aside className="evidence-panel" aria-label={profile.proofIntro}>
             <div className="panel-heading">
-              <span>{profile.proofIntro}</span>
-              <h2>先让招聘方知道该看什么</h2>
+              <span>近期实践</span>
+              <h2>最近把想法落到这几件事里</h2>
             </div>
             <ol className="evidence-list">
-              {heroProofs.map((item, index) => (
+              {heroProofs.slice(0, 3).map((item, index) => (
                 <li key={item.title}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <strong>{item.title}</strong>
-                    <p>{item.detail}</p>
+                    <ExpandableText lines={2}>{item.detail}</ExpandableText>
                   </div>
                 </li>
               ))}
@@ -401,68 +590,25 @@ export function App() {
         <section className="section projects-section" id="projects" aria-labelledby="projects-title">
           <div className="section-heading">
             <p className="eyebrow">Portfolio</p>
-            <h2 id="projects-title">四个展示物：从可体验产品到分析文档</h2>
+            <h2 id="projects-title">最近做过的东西</h2>
             <p>
-              阅读顺序建议：先点在线Demo和报告，再看每个项目的能力标签和待补证据。截图只放在对应项目下面，避免材料混在一起。
+              它们还在继续变好，但已经能看出我怎样理解问题、组织工具、把想法做成可体验的东西。
             </p>
           </div>
 
           <div className="project-grid">
             {projects.map((project, index) => (
-              <ProjectCard project={project} index={index} key={project.id} />
+              <ProjectCard
+                project={project}
+                index={index}
+                key={project.id}
+                onOpenScreenshot={openLightbox}
+              />
             ))}
           </div>
-
-          <ReportBrief />
         </section>
 
         <ProofSection />
-
-        <section className="section experience-section" id="experience" aria-labelledby="experience-title">
-          <div className="section-heading">
-            <p className="eyebrow">Transfer</p>
-            <h2 id="experience-title">过往经历如何迁移到 AI 产品助理工作</h2>
-            <p>不把过往经历包装成夸张成果，只说明它们如何支撑用户理解、复杂交付和AI应用实践。</p>
-          </div>
-          <div className="transfer-timeline">
-            {experiences.map((item, index) => (
-              <article className="transfer-item" key={item.source}>
-                <span className="timeline-index">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{item.source}</h3>
-                  <p>{item.transfer}</p>
-                  <strong>{item.productValue}</strong>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section next-section" id="next" aria-labelledby="next-title">
-          <div className="section-heading">
-            <p className="eyebrow">First 30 Days</p>
-            <h2 id="next-title">入职前30天，我会优先补齐这些可交付物</h2>
-            <p>按初级AI产品 / 产品助理的合理边界来写：把调研、需求、原型、测试和复盘推进成可复用材料。</p>
-          </div>
-          <div className="next-layout">
-            <div className="next-summary">
-              <Sparkles size={22} aria-hidden="true" />
-              <h3>重点不是夸张承诺，而是把信息整理清楚，把小原型跑起来。</h3>
-              <p>这些动作能直接补强当前作品集，也能迁移到团队里的产品助理工作。</p>
-            </div>
-            <ol className="next-list">
-              {nextActions.map((item) => (
-                <li key={item.title}>
-                  <BadgeCheck size={18} aria-hidden="true" />
-                  <div>
-                    <strong>{item.title}</strong>
-                    <p>{item.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
 
         <section className="section about-contact-section" id="contact" aria-labelledby="contact-title">
           <div className="about-contact-grid">
@@ -470,10 +616,10 @@ export function App() {
               <p className="eyebrow">About</p>
               <h2>关于我</h2>
               <p>
-                我的本科专业是土木工程，过往经历包括用户运营和玻璃幕墙建模设计。当前转型方向是AI应用产品、AI产品助理、AI应用搭建和AI产品运营。
+                我专注AI应用产品实践，熟悉从想法描述、需求拆解、AI协作搭建、测试记录到上线展示的过程。
               </p>
               <p>
-                目前我用作品集证明三件事：能分析AI产品，能借助AI工具推进MVP，能把过往用户理解和复杂交付经验迁移到产品工作里。
+                我希望把AI工具放进真实任务里，持续做出可体验的小产品、清楚的测评记录和可复盘的迭代过程。
               </p>
             </article>
 
@@ -496,11 +642,22 @@ export function App() {
                   })}
               </div>
               <div className="contact-actions">
-                <a className="button primary" href={links.resumePdf} download>
+                <a
+                  className="button primary"
+                  href={links.resumeDocx}
+                  download
+                  aria-label="下载Roxy163的简历Word文件"
+                >
                   <Download size={18} aria-hidden="true" />
-                  下载简历PDF
+                  下载简历Word
                 </a>
-                <a className="button secondary" href={links.github} target="_blank" rel="noreferrer">
+                <a
+                  className="button secondary"
+                  href={links.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="访问Roxy163的GitHub查看作品链接"
+                >
                   <Globe2 size={18} aria-hidden="true" />
                   GitHub / 作品链接
                 </a>
@@ -515,6 +672,12 @@ export function App() {
           <ArrowUp size={18} />
         </button>
       )}
+
+      <ImageLightbox
+        state={lightboxState}
+        onStep={stepLightbox}
+        onClose={() => setLightboxState(null)}
+      />
     </div>
   );
 }

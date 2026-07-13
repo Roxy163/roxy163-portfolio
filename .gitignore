@@ -4,7 +4,6 @@ edge-profile*/
 github-upload-clean/
 *.log
 *.zip
-*.png
 .DS_Store
 
 # Accidental duplicate clone kept locally; the real portfolio repo is this folder.

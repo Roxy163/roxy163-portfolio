@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">AI产品测评整理流程摘要</title>
+  <desc id="desc">展示AI产品测评从统一材料到结论沉淀的整理流程。</desc>
+  <rect width="800" height="500" rx="28" fill="#fffaf0"/>
+  <rect x="28" y="28" width="744" height="444" rx="24" fill="#ffffff" stroke="#f1d8a8" stroke-width="2"/>
+  <text x="56" y="78" fill="#b56b10" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800">整理流程</text>
+  <text x="56" y="112" fill="#1f2a37" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="32" font-weight="900">把零散体验整理成可复盘结论</text>
+  <text x="56" y="144" fill="#667686" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="16">每个工具都保留原始 Prompt、输出记录、评分表和个人判断，方便回看和继续迭代。</text>
+
+  <g font-family="Arial, 'Microsoft YaHei', sans-serif">
+    <circle cx="92" cy="205" r="24" fill="#0f766e"/>
+    <text x="84" y="213" fill="#ffffff" font-size="20" font-weight="900">1</text>
+    <text x="132" y="200" fill="#1f2a37" font-size="19" font-weight="900">固定测试材料和 Prompt</text>
+    <text x="132" y="226" fill="#667686" font-size="15">避免每个工具面对的题目不一样。</text>
+
+    <line x1="92" y1="232" x2="92" y2="274" stroke="#cfe6e4" stroke-width="4"/>
+    <circle cx="92" cy="300" r="24" fill="#2f6fb3"/>
+    <text x="84" y="308" fill="#ffffff" font-size="20" font-weight="900">2</text>
+    <text x="132" y="295" fill="#1f2a37" font-size="19" font-weight="900">先做 21 款长文解读实测</text>
+    <text x="132" y="321" fill="#667686" font-size="15">记录输出质量、阅读成本和是否跑偏。</text>
+
+    <line x1="92" y1="327" x2="92" y2="369" stroke="#cfe6e4" stroke-width="4"/>
+    <circle cx="92" cy="395" r="24" fill="#b56b10"/>
+    <text x="84" y="403" fill="#ffffff" font-size="20" font-weight="900">3</text>
+    <text x="132" y="390" fill="#1f2a37" font-size="19" font-weight="900">挑出 9 款继续深测</text>
+    <text x="132" y="416" fill="#667686" font-size="15">观察项目包装、功能清单和边界说明能力。</text>
+
+    <rect x="480" y="184" width="244" height="90" rx="18" fill="#ecf8f7"/>
+    <text x="506" y="218" fill="#0f766e" font-size="18" font-weight="900">核心结论</text>
+    <text x="506" y="247" fill="#1f2a37" font-size="17" font-weight="800">AI 产品不是简单强弱关系，</text>
+    <text x="506" y="271" fill="#1f2a37" font-size="17" font-weight="800">更像任务适配关系。</text>
+
+    <rect x="480" y="300" width="244" height="112" rx="18" fill="#fff3f8"/>
+    <text x="506" y="334" fill="#c24174" font-size="18" font-weight="900">整理原则</text>
+    <text x="506" y="363" fill="#1f2a37" font-size="16" font-weight="800">不编造上线情况</text>
+    <text x="506" y="388" fill="#1f2a37" font-size="16" font-weight="800">不夸大技术能力</text>
+    <text x="506" y="413" fill="#1f2a37" font-size="16" font-weight="800">不把计划写成已完成</text>
+  </g>
+</svg>

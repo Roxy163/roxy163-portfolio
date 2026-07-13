@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">AI产品测评对比记录摘要</title>
+  <desc id="desc">展示从21款AI产品中继续深测的9个产品及简要结论。</desc>
+  <rect width="800" height="500" rx="28" fill="#f8fbff"/>
+  <rect x="28" y="28" width="744" height="444" rx="24" fill="#ffffff" stroke="#d8e6f8" stroke-width="2"/>
+  <text x="56" y="78" fill="#2f6fb3" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800">对比记录</text>
+  <text x="56" y="112" fill="#1f2a37" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="32" font-weight="900">从 21 款初测，到 9 款继续深入</text>
+  <text x="56" y="144" fill="#667686" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="16">不是简单排名，而是记录它们在项目包装、功能拆解、边界判断里的适配度。</text>
+
+  <g font-family="Arial, 'Microsoft YaHei', sans-serif">
+    <rect x="56" y="178" width="210" height="68" rx="16" fill="#ecf8f7"/>
+    <text x="74" y="204" fill="#0f766e" font-size="18" font-weight="900">Claude · A</text>
+    <text x="74" y="228" fill="#53606d" font-size="14">验收标准和计划详尽</text>
+
+    <rect x="295" y="178" width="210" height="68" rx="16" fill="#ecf8f7"/>
+    <text x="313" y="204" fill="#0f766e" font-size="18" font-weight="900">ChatGPT · A</text>
+    <text x="313" y="228" fill="#53606d" font-size="14">范围控制清楚</text>
+
+    <rect x="534" y="178" width="210" height="68" rx="16" fill="#ecf8f7"/>
+    <text x="552" y="204" fill="#0f766e" font-size="18" font-weight="900">Codex · A</text>
+    <text x="552" y="228" fill="#53606d" font-size="14">贴近真实情况</text>
+
+    <rect x="56" y="266" width="210" height="68" rx="16" fill="#f7fcfb"/>
+    <text x="74" y="292" fill="#2f6fb3" font-size="18" font-weight="900">DeepSeek · A-</text>
+    <text x="74" y="316" fill="#53606d" font-size="14">定位漂亮，需防编数据</text>
+
+    <rect x="295" y="266" width="210" height="68" rx="16" fill="#f7fcfb"/>
+    <text x="313" y="292" fill="#2f6fb3" font-size="18" font-weight="900">扣子 · A-</text>
+    <text x="313" y="316" fill="#53606d" font-size="14">B端 / RAG 方案清楚</text>
+
+    <rect x="534" y="266" width="210" height="68" rx="16" fill="#f7fcfb"/>
+    <text x="552" y="292" fill="#2f6fb3" font-size="18" font-weight="900">文心一言 · A-</text>
+    <text x="552" y="316" fill="#53606d" font-size="14">简洁实用，适合面试</text>
+
+    <rect x="56" y="354" width="210" height="68" rx="16" fill="#fff7e8"/>
+    <text x="74" y="380" fill="#b56b10" font-size="18" font-weight="900">Gemini · A-</text>
+    <text x="74" y="404" fill="#53606d" font-size="14">创意强，需收敛表达</text>
+
+    <rect x="295" y="354" width="210" height="68" rx="16" fill="#fff7e8"/>
+    <text x="313" y="380" fill="#b56b10" font-size="18" font-weight="900">Kimi · B+</text>
+    <text x="313" y="404" fill="#53606d" font-size="14">结构完整，功能偏多</text>
+
+    <rect x="534" y="354" width="210" height="68" rx="16" fill="#fff7e8"/>
+    <text x="552" y="380" fill="#b56b10" font-size="18" font-weight="900">豆包 · B</text>
+    <text x="552" y="404" fill="#53606d" font-size="14">条理清楚，部分方案过度</text>
+  </g>
+
+  <text x="56" y="456" fill="#667686" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="15">保留维度：输出特点、风险点、事实边界、是否适合继续用于作品集整理。</text>
+</svg>
