@@ -1,0 +1,9 @@
+name = "roxy163-portfolio"
+type = "static"
+
+[build]
+command = "npm run build"
+directory = "dist"
+
+[env]
+NODE_VERSION = "20"
