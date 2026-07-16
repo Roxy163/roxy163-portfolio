@@ -50,7 +50,7 @@ export const links = {
   email: "ry-dakeai@foxmail.com",
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
-  portfolio: "https://roxy163.netlify.app",
+  portfolio: "https://roxy163-portfolio.pages.dev",
   tarotApp: "https://tarot-pavilion.netlify.app",
   tarotDemoVideo:
     "https://www.bilibili.com/video/BV186N26FEYj/?spm_id_from=333.1387.homepage.video_card.click&vd_source=6e2c392c8c2299109120418017318712",
