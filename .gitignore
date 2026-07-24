@@ -9,3 +9,6 @@ github-upload-clean/
 # Accidental duplicate clone kept locally; the real portfolio repo is this folder.
 roxy163-portfolio/
 edge-profile/
+
+# Local Netlify folder
+.netlify

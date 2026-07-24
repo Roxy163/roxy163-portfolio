@@ -58,7 +58,7 @@ export const links = {
   email: "ry-dakeai@foxmail.com",
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
-  portfolio: "https://roxy163-portfolio.pages.dev",
+  portfolio: "https://roxy163.netlify.app",
   tarotApp: "https://tarot-pavilion.pages.dev/",
   tarotDemoVideo:
     "https://www.xiaohongshu.com/discovery/item/6a621be6000000000100d968?source=webshare&xhsshare=pc_web&xsec_token=ABuezNGf0u0QFw3rkzQ_bjt-sY9d3q1dFUq5k0ffxUu70=&xsec_source=pc_share",
