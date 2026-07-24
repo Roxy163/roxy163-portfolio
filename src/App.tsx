@@ -316,7 +316,7 @@ function ProjectSummary({ points }: { points?: string[] }) {
 
   return (
     <div className="project-summary">
-      <span>站内摘要</span>
+      <span>重点摘要</span>
       <ul>
         {points.map((point) => (
           <li key={point}>{point}</li>
@@ -329,28 +329,30 @@ function ProjectSummary({ points }: { points?: string[] }) {
 function ProjectVideo({ project }: { project: Project }) {
   if (!project.video) return null;
 
+  const video = project.video;
+
   return (
     <div className="project-video">
       <div className="project-video-copy">
         <span>演示视频</span>
-        <strong>{project.video.title}</strong>
-        <p>{project.video.description}</p>
-        <a className="text-link" href={project.video.href} target="_blank" rel="noreferrer">
-          去B站观看
+        <strong>{video.title}</strong>
+        <p>{video.description}</p>
+        <a className="text-link" href={video.href} target="_blank" rel="noreferrer">
+          {video.actionLabel}
           <ArrowUpRight size={15} aria-hidden="true" />
         </a>
       </div>
       <a
         className="video-cover"
-        href={project.video.href}
+        href={video.href}
         target="_blank"
         rel="noreferrer"
-        aria-label={`在B站观看：${project.video.title}`}
+        aria-label={`${video.actionLabel}：${video.title}`}
       >
-        <img src={project.video.cover} alt={project.video.coverAlt} loading="lazy" />
+        <img src={video.cover} alt={video.coverAlt} loading="lazy" />
         <span>
           <PlayCircle size={34} aria-hidden="true" />
-          B站观看
+          {video.platformLabel}
         </span>
       </a>
     </div>
@@ -571,7 +573,7 @@ export function App() {
           <aside className="evidence-panel" aria-label={profile.proofIntro}>
             <div className="panel-heading">
               <span>近期实践</span>
-              <h2>最近把想法落到这几件事里</h2>
+              <h2>能直接打开查看的实践</h2>
             </div>
             <ol className="evidence-list">
               {heroProofs.slice(0, 3).map((item, index) => (
@@ -590,9 +592,9 @@ export function App() {
         <section className="section projects-section" id="projects" aria-labelledby="projects-title">
           <div className="section-heading">
             <p className="eyebrow">Portfolio</p>
-            <h2 id="projects-title">最近做过的东西</h2>
+            <h2 id="projects-title">代表作品</h2>
             <p>
-              它们还在继续变好，但已经能看出我怎样理解问题、组织工具、把想法做成可体验的东西。
+              每个项目都保留了链接、截图和真实过程，重点看需求拆解、AI协作、测试记录和迭代方式。
             </p>
           </div>
 
@@ -636,7 +638,7 @@ export function App() {
                       <div className="contact-item" key={item.label}>
                         <Icon size={18} aria-hidden="true" />
                         <span>{item.label}</span>
-                        <strong>{item.value}</strong>
+                        <strong>{item.displayValue ?? item.value}</strong>
                       </div>
                     );
                   })}

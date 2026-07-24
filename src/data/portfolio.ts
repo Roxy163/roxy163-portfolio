@@ -29,6 +29,8 @@ export type Project = {
     title: string;
     description: string;
     href: string;
+    platformLabel: string;
+    actionLabel: string;
     cover: string;
     coverAlt: string;
   };
@@ -45,16 +47,21 @@ export type CapabilityProof = {
   evidence: string;
 };
 
+export type ContactItem = {
+  label: string;
+  value: string;
+  displayValue?: string;
+};
+
 export const links = {
   resumeDocx: "/Roxy_AI产品助理.docx",
   email: "ry-dakeai@foxmail.com",
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
-  // portfolio: "https://roxy163.netlify.app",
   portfolio: "https://roxy163-portfolio.pages.dev",
-  tarotApp: "https://tarot-pavilion.netlify.app",
+  tarotApp: "https://tarot-pavilion.pages.dev/",
   tarotDemoVideo:
-    "https://www.bilibili.com/video/BV186N26FEYj/?spm_id_from=333.1387.homepage.video_card.click&vd_source=6e2c392c8c2299109120418017318712",
+    "https://www.xiaohongshu.com/discovery/item/6a621be6000000000100d968?source=webshare&xhsshare=pc_web&xsec_token=ABuezNGf0u0QFw3rkzQ_bjt-sY9d3q1dFUq5k0ffxUu70=&xsec_source=pc_share",
   difyAssistant: "https://udify.app/chat/yE8PgcVCb2t5jOIp",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
@@ -78,7 +85,7 @@ export const heroProofs = [
     detail: "一个在AI辅助下反复搭建和迭代出来的塔罗记录 App，已经可以在线体验。",
   },
   {
-    title: "20+ AI软件测评文档",
+    title: "21款AI软件测评文档",
     detail: "从同一长文解读任务出发，把多个AI产品的输出、评分和个人判断整理成记录。",
   },
   {
@@ -96,7 +103,7 @@ export const projects: Project[] = [
     id: "tarot-app",
     title: "塔罗研习阁：AI塔罗记录与自我探索 App",
     label: "AI App MVP",
-    status: "已部署到 Netlify，可在线体验",
+    status: "已部署到 Cloudflare Pages，可在线体验",
     image: "/images/covers/tarot-app-cover.png",
     imageFallback: "塔罗研习阁：AI塔罗记录与自我探索应用",
     imageAlt: "塔罗研习阁作品封面图，展示神秘紫色背景和塔罗牌元素",
@@ -115,14 +122,16 @@ export const projects: Project[] = [
     tags: ["用户记录", "塔罗研习", "AI辅助解读", "云端同步"],
     links: [
       { label: "在线体验", href: links.tarotApp },
-      { label: "B站演示视频", href: links.tarotDemoVideo },
+      { label: "小红书介绍视频", href: links.tarotDemoVideo },
     ],
     video: {
-      title: "B站演示视频",
-      description: "我录了一段视频，介绍塔罗研习阁的主要页面、使用流程和做这个 App 的过程。",
+      title: "小红书介绍视频",
+      description: "视频里展示了塔罗研习阁的主要页面、使用流程，以及我如何用AI工具把想法推进成可体验的 App。",
       href: links.tarotDemoVideo,
-      cover: "/images/tarot-app/bilibili-cover.png",
-      coverAlt: "B站视频封面：我用AI做了个塔罗记录App",
+      platformLabel: "小红书观看",
+      actionLabel: "去小红书观看",
+      cover: "/images/tarot-app/xhs-cover.png",
+      coverAlt: "小红书视频封面：我用AI做了个塔罗记录App",
     },
     screenshots: [
       {
@@ -159,7 +168,7 @@ export const projects: Project[] = [
   },
   {
     id: "ai-products-report",
-    title: "20+ AI软件测评文档：长文解读任务实测记录",
+    title: "21款AI软件测评文档：长文解读任务实测记录",
     label: "AI工具测评",
     status: "Notion 报告已公开",
     image: "/images/covers/ai-report-cover.png",
@@ -247,7 +256,7 @@ export const projects: Project[] = [
     id: "portfolio-site",
     title: "Roxy163 个人作品集网站：AI作品与实践整理",
     label: "Portfolio Site",
-    status: "已部署到 Netlify，持续迭代中",
+    status: "已部署到 Cloudflare Pages，持续迭代中",
     image: "/images/covers/portfolio-cover.png",
     imageFallback: "作品集展示 · 实践记录",
     imageAlt: "个人作品集网站封面图，展示项目卡片和科技感设计",
@@ -304,9 +313,9 @@ export const capabilityMatrix: CapabilityProof[] = [
   },
 ];
 
-export const contactItems = [
+export const contactItems: ContactItem[] = [
   { label: "邮箱", value: links.email },
   { label: "微信", value: links.wechat },
   { label: "GitHub / 作品链接", value: links.github },
-  { label: "简历Word", value: links.resumeDocx },
+  { label: "简历Word", value: links.resumeDocx, displayValue: "已附Word简历" },
 ];
