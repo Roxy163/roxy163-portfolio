@@ -54,7 +54,7 @@ export type ContactItem = {
 };
 
 export const links = {
-  resumeDocx: "/Roxy_AI产品助理.docx",
+  resumePdf: "/resume.pdf",
   email: "ry-dakeai@foxmail.com",
   wechat: "juben6868",
   github: "https://github.com/Roxy163",
@@ -62,6 +62,7 @@ export const links = {
   tarotApp: "https://tarot-pavilion.pages.dev/",
   tarotDemoVideo:
     "https://www.xiaohongshu.com/discovery/item/6a621be6000000000100d968?source=webshare&xhsshare=pc_web&xsec_token=ABuezNGf0u0QFw3rkzQ_bjt-sY9d3q1dFUq5k0ffxUu70=&xsec_source=pc_share",
+  tarotReview: "https://app.notion.com/p/3aaefea89c2e80e6a2e5e403e02d0856?source=copy_link",
   difyAssistant: "https://udify.app/chat/yE8PgcVCb2t5jOIp",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
@@ -70,13 +71,13 @@ export const links = {
 export const profile = {
   name: "Roxy163",
   location: "武汉本地或远程",
-  targetRoles: ["AI应用产品助理", "AI应用搭建", "产品助理"],
-  headline: "AI应用产品助理作品集",
-  positioning: "我擅长把一个想法说清楚、拆开来做，并借助AI工具推进成可体验的初版。",
+  targetRoles: ["AI产品专员", "AI应用产品助理", "产品助理"],
+  headline: "AI应用产品作品集",
+  positioning: "我擅长把一个想法说清楚、拆成可执行步骤，并借助AI工具推进成可体验的初版。",
   summary:
-    "我长期围绕AI工具、应用搭建、产品测评和迭代记录做实践，用不断提问、测试和复盘的方式，把学习过程沉淀成可查看的作品。",
+    "我长期围绕AI工具、应用搭建、产品测评和迭代复盘做实践，用不断提问、测试和记录的方式，把学习过程沉淀成可查看的作品。",
   proofIntro: "近期实践",
-  contactLine: "欢迎联系我交流AI应用产品助理、AI应用搭建或产品助理相关机会。",
+  contactLine: "欢迎联系我交流AI产品专员、AI应用产品助理或产品助理相关机会。",
 };
 
 export const heroProofs = [
@@ -112,16 +113,18 @@ export const projects: Project[] = [
     did:
       "从一句想法开始，用 ChatGPT、DeepSeek、Google AI Studio 和 Codex 辅助拆需求、生成方案、改页面、调问题，并持续迭代到可在线体验。",
     progress:
-      "已支持访客模式、注册登录、云端同步、AI解读、牌义注解和移动端适配；云端同步目前需要在可访问相关服务的网络环境下使用。",
+      "已支持访客模式、注册登录、云端同步、AI解读、牌义注解和移动端适配；已整理产品复盘，记录需求拆解、AI协作和迭代过程。",
     process: [
       "先把想法讲给 ChatGPT、DeepSeek 等工具，请它们帮我梳理功能和提示词。",
       "早期用 Google AI Studio 做初版，发现无法满足后续需求后转到 Codex 继续推进。",
       "边使用边记录问题，再通过多轮对话、修改、测试，把登录、记录、AI解读、移动端等功能逐步补上。",
+      "最后把做过的功能、遇到的问题和后续优化方向整理成产品复盘，方便回看和继续迭代。",
     ],
-    proves: ["想法落地", "AI辅助开发", "持续迭代", "功能测试", "移动端适配", "上线部署"],
+    proves: ["需求拆解", "AI辅助开发", "持续迭代", "功能测试", "产品复盘", "上线部署"],
     tags: ["用户记录", "塔罗研习", "AI辅助解读", "云端同步"],
     links: [
       { label: "在线体验", href: links.tarotApp },
+      { label: "产品复盘", href: links.tarotReview },
       { label: "小红书介绍视频", href: links.tarotDemoVideo },
     ],
     video: {
@@ -256,7 +259,7 @@ export const projects: Project[] = [
     id: "portfolio-site",
     title: "Roxy163 个人作品集网站：AI作品与实践整理",
     label: "Portfolio Site",
-    status: "已部署到 Cloudflare Pages，持续迭代中",
+    status: "已部署到 Netlify，持续迭代中",
     image: "/images/covers/portfolio-cover.png",
     imageFallback: "作品集展示 · 实践记录",
     imageAlt: "个人作品集网站封面图，展示项目卡片和科技感设计",
@@ -283,31 +286,25 @@ export const projects: Project[] = [
 export const capabilityMatrix: CapabilityProof[] = [
   {
     title: "AI应用方向感",
-    target: "AI应用产品 / 产品助理 / 应用搭建",
+    target: "AI产品专员 / AI应用产品助理",
     evidence:
-      "持续围绕AI应用产品、产品助理和应用搭建做作品，重视从真实想法到可体验初版的过程。",
+      "持续围绕AI应用产品、产品助理和应用搭建做作品，重视从真实想法到可体验初版的过程，也会关注AI工具在具体任务里的适配边界。",
   },
   {
-    title: "AI协作能力",
-    target: "提问、拆解、测试、迭代",
+    title: "需求拆解与功能设计",
+    target: "场景理解、功能拆分、说明文档",
     evidence:
-      "塔罗 App、Dify助手和个人网站都不是一次做成的，而是在AI辅助下不断描述需求、发现问题、修改和复盘。",
+      "项目里会写清为什么做、解决什么问题、已有功能和下一步优化；塔罗 App 也整理了产品复盘，记录从想法到功能落地的过程。",
   },
   {
-    title: "需求拆解能力",
-    target: "场景理解、功能拆分、MVP验证",
+    title: "AI协作与交付推进",
+    target: "MVP搭建、部署、调试、问题跟进",
     evidence:
-      "项目里会写清为什么做、解决什么问题、做了哪些功能，以及下一步如何继续验证。",
+      "塔罗 App、Dify助手和个人网站都不是一次做成的，而是在AI辅助下不断描述需求、发现问题、修改、测试并推进到可体验状态。",
   },
   {
-    title: "MVP搭建能力",
-    target: "AI辅助搭建、部署、调试、记录",
-    evidence:
-      "作品集与塔罗 App 已上线；我能借助AI工具和教程，把页面、功能、部署和问题修复推进到可体验状态。",
-  },
-  {
-    title: "产品测评与复盘",
-    target: "评分表、Prompt、输出评估、结论沉淀",
+    title: "产品测评与迭代复盘",
+    target: "竞品/工具分析、产品测试、结论沉淀",
     evidence:
       "AI软件测评保留了原始Prompt、评分表、输出记录和个人结论，也会在项目迭代里记录问题与调整。",
   },
@@ -317,5 +314,5 @@ export const contactItems: ContactItem[] = [
   { label: "邮箱", value: links.email },
   { label: "微信", value: links.wechat },
   { label: "GitHub / 作品链接", value: links.github },
-  { label: "简历Word", value: links.resumeDocx, displayValue: "已附Word简历" },
+  { label: "简历PDF", value: links.resumePdf, displayValue: "已附PDF简历" },
 ];

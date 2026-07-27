@@ -41,7 +41,7 @@ const contactIconMap = {
   邮箱: Mail,
   微信: MessageCircle,
   "GitHub / 作品链接": Github,
-  简历Word: Download,
+  简历PDF: Download,
 };
 
 const projectIconMap = {
@@ -646,12 +646,12 @@ export function App() {
               <div className="contact-actions">
                 <a
                   className="button primary"
-                  href={links.resumeDocx}
-                  download
-                  aria-label="下载Roxy163的简历Word文件"
+                  href={links.resumePdf}
+                  download="饶颖_AI产品经理.pdf"
+                  aria-label="下载Roxy163的简历PDF文件"
                 >
                   <Download size={18} aria-hidden="true" />
-                  下载简历Word
+                  下载简历PDF
                 </a>
                 <a
                   className="button secondary"
