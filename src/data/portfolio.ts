@@ -38,6 +38,7 @@ export type Project = {
     title: string;
     path: string;
     alt: string;
+    layout?: "phone" | "wide";
   }>;
 };
 
@@ -63,6 +64,7 @@ export const links = {
   tarotDemoVideo:
     "https://www.xiaohongshu.com/discovery/item/6a621be6000000000100d968?source=webshare&xhsshare=pc_web&xsec_token=ABuezNGf0u0QFw3rkzQ_bjt-sY9d3q1dFUq5k0ffxUu70=&xsec_source=pc_share",
   tarotReview: "https://app.notion.com/p/3aaefea89c2e80e6a2e5e403e02d0856?source=copy_link",
+  tarotFlowDoc: "/docs/tarot-app-user-flow.md",
   difyAssistant: "https://udify.app/chat/yE8PgcVCb2t5jOIp",
   aiReport:
     "https://www.notion.so/20-AI-AI-360efea89c2e8025a1fad69c3ad9f9ba?source=copy_link",
@@ -125,6 +127,7 @@ export const projects: Project[] = [
     links: [
       { label: "在线体验", href: links.tarotApp },
       { label: "产品复盘", href: links.tarotReview },
+      { label: "流程说明", href: links.tarotFlowDoc },
       { label: "小红书介绍视频", href: links.tarotDemoVideo },
     ],
     video: {
@@ -137,6 +140,12 @@ export const projects: Project[] = [
       coverAlt: "小红书视频封面：我用AI做了个塔罗记录App",
     },
     screenshots: [
+      {
+        title: "用户流程图",
+        path: "/images/tarot-app/user-flow.svg",
+        alt: "塔罗研习阁用户流程图，展示日运记录、抽牌手记、典籍索引、牌义小考和侧边栏等使用路径",
+        layout: "wide",
+      },
       {
         title: "研习台首页",
         path: "/images/tarot-app/home-1.png",

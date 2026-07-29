@@ -229,7 +229,7 @@ function ImageLightbox({
       onTouchEnd={handleTouchEnd}
     >
       <button className="lightbox-backdrop" type="button" onClick={onClose} aria-label="关闭预览" />
-      <figure className="lightbox-content">
+      <figure className={`lightbox-content${image.layout === "wide" ? " wide-lightbox" : ""}`}>
         <button className="lightbox-close" type="button" onClick={onClose} aria-label="关闭预览">
           <X size={18} aria-hidden="true" />
         </button>
@@ -285,7 +285,7 @@ function ProjectScreenshots({
       <span>展示图</span>
       <div>
         {project.screenshots.map((shot, index) => (
-          <figure key={shot.path}>
+          <figure className={shot.layout === "wide" ? "screenshot-wide" : undefined} key={shot.path}>
             <button
               className="screenshot-button"
               type="button"

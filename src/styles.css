@@ -911,6 +911,16 @@ h4 {
   box-shadow: 0 6px 16px rgba(31, 42, 55, 0.1);
 }
 
+.case-screenshots figure.screenshot-wide {
+  flex-basis: 250px;
+}
+
+.case-screenshots figure.screenshot-wide img {
+  max-width: 250px;
+  height: 168px;
+  aspect-ratio: 16 / 10;
+}
+
 .case-screenshots[data-project="ai-products-report"] figure,
 .case-screenshots[data-project="tarot-dify-assistant"] figure {
   flex-basis: 202px;
@@ -996,6 +1006,10 @@ h4 {
   touch-action: pan-y;
 }
 
+.lightbox-content.wide-lightbox {
+  max-width: min(96vw, 1180px);
+}
+
 .lightbox-content img {
   width: auto;
   max-width: 100%;
@@ -1004,6 +1018,10 @@ h4 {
   background: #ffffff;
   object-fit: contain;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+}
+
+.lightbox-content.wide-lightbox img {
+  width: min(96vw, 1180px);
 }
 
 .lightbox-content figcaption {
@@ -1440,6 +1458,15 @@ h4 {
 
   .case-screenshots img {
     height: 198px;
+  }
+
+  .case-screenshots figure.screenshot-wide {
+    flex-basis: 240px;
+  }
+
+  .case-screenshots figure.screenshot-wide img {
+    max-width: 240px;
+    height: 162px;
   }
 
   .case-screenshots[data-project="ai-products-report"] figure,
